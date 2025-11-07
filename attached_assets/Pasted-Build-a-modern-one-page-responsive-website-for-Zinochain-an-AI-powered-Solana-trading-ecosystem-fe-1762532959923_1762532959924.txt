@@ -1,0 +1,154 @@
+Build a modern, one-page responsive website for Zinochain, an AI-powered Solana trading ecosystem featuring a Telegram bot called Zinobot.
+
+🧱 Overall Design
+
+Use Next.js or React (Vite)
+
+Style with Tailwind CSS
+
+Include smooth scroll animations (Framer Motion or GSAP preferred)
+
+Use a dark theme with glowing gradients, neon highlights, and animated crypto visuals
+
+Responsive for both mobile and desktop
+
+Hero section should include animated background particles or wave effects
+
+🌐 Pages & Sections
+1️⃣ Home Page (Single Page Layout)
+
+Sections to include (scroll-based):
+
+Hero Section
+
+Title: “Zinochain — AI-Powered Solana Trading”
+
+Subtitle: “Meet Zinobot, the meme-fueled Solana trader powered by AI and community hype.”
+
+Buttons:
+
+“🚀 Launch Zinobot on Telegram” → link to https://t.me/Zinobot
+
+“💰 Buy Crypto with MoonPay” → open MoonPay widget or link to MoonPay checkout
+
+Background: animated gradient or 3D crypto floating icons (SOL logo, Pepe meme style)
+
+About Section
+
+Short text about Zinochain and Zinobot (AI-powered Solana trading)
+
+Mention that the bot trades only on Solana network
+
+Include mini cards for:
+
+“AI-Powered Signals”
+
+“Meme-Driven Community”
+
+“Built for Solana”
+
+Rewards Section
+
+Explain that users can earn rewards based on trading volume, referrals, and community activity
+
+Animated counter or progress bar showing total rewards distributed
+
+Referral Section
+
+Short teaser: “Invite your friends and earn SOL rewards.”
+
+Button: “Learn More” → links to /referral
+
+Get Started Section
+
+Show steps visually:
+
+Buy SOL via MoonPay
+
+Launch Zinobot on Telegram
+
+Trade and earn rewards
+
+Add icons and minimal animations
+
+Footer
+
+Links: Home | Referral | Docs | Telegram | X (Twitter)
+
+Copyright © 2025 Zinochain
+
+2️⃣ Referral Page (/referral)
+
+Explain how referrals work:
+
+Share your link to invite friends
+
+Earn SOL or Zino points when they trade using Zinobot
+
+Optional: Leaderboard coming soon
+
+Include mockup or animated graphic of referral flow
+
+Button to “Launch Zinobot” (t.me/Zinobot)
+
+3️⃣ Docs Page (/docs)
+
+Minimal layout (sidebar + content)
+
+Sections:
+
+Overview of Zinochain ecosystem
+
+How to connect your Solana wallet
+
+MoonPay integration guide
+
+Zinobot commands (example: /trade, /balance, /refer)
+
+API info (coming soon)
+
+Use markdown-styled formatting for readability
+
+✨ Animations
+
+Use Framer Motion for fade-ins and slide transitions
+
+Hover effects on buttons and cards
+
+Animated glowing borders for CTAs
+
+🔗 Integrations
+
+MoonPay widget iframe (for crypto purchases)
+
+Telegram deep link button: https://t.me/Zinobot
+
+Add simple Solana logo animation
+
+⚙️ Tech Setup
+
+Framework: React (Vite) or Next.js
+
+CSS: Tailwind
+
+Animation: Framer Motion
+
+Deployment-ready (Netlify / Vercel compatible)
+
+All content editable from a simple config file
+
+✅ Output
+
+Create 3 pages: /, /referral, /docs
+
+Include working navigation between them
+
+Fully responsive
+
+Use a modern crypto aesthetic with motion and glowing gradients
+
+Project Title: Zinochain - AI Solana Trading Ecosystem
+Bot Link: https://t.me/Zinobot
+Theme: Dark + Neon Purple/Blue Gradient
+Primary Font: Inter or Poppins
+Mood: Meme meets Tech (fun but clean)
