@@ -216,15 +216,16 @@ export default function Home() {
           </div>
 
           <ScrollStack
-            itemDistance={50}
-            itemScale={0.05}
-            itemStackDistance={40}
-            stackPosition="30%"
-            baseScale={0.9}
+            itemDistance={120}
+            itemScale={0.02}
+            itemStackDistance={20}
+            stackPosition="25%"
+            baseScale={0.95}
+            useWindowScroll={true}
             className="max-w-5xl mx-auto"
           >
             <ScrollStackItem>
-              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-primary/5 backdrop-blur-sm" data-testid="card-stack-ai">
+              <Card className="p-12 bg-background border-border" data-testid="card-stack-ai">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="p-8 bg-primary/10 rounded-2xl border border-primary/30">
                     <Bot className="h-16 w-16 text-primary" />
@@ -242,7 +243,7 @@ export default function Home() {
             </ScrollStackItem>
 
             <ScrollStackItem>
-              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-chart-2/5 backdrop-blur-sm" data-testid="card-stack-signals">
+              <Card className="p-12 bg-background border-border" data-testid="card-stack-signals">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="p-8 bg-chart-2/10 rounded-2xl border border-chart-2/30">
                     <LineChart className="h-16 w-16 text-chart-2" />
@@ -260,7 +261,7 @@ export default function Home() {
             </ScrollStackItem>
 
             <ScrollStackItem>
-              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-chart-3/5 backdrop-blur-sm" data-testid="card-stack-security">
+              <Card className="p-12 bg-background border-border" data-testid="card-stack-security">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="p-8 bg-chart-3/10 rounded-2xl border border-chart-3/30">
                     <Shield className="h-16 w-16 text-chart-3" />
@@ -278,7 +279,7 @@ export default function Home() {
             </ScrollStackItem>
 
             <ScrollStackItem>
-              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-chart-4/5 backdrop-blur-sm" data-testid="card-stack-easy">
+              <Card className="p-12 bg-background border-border" data-testid="card-stack-easy">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="p-8 bg-chart-4/10 rounded-2xl border border-chart-4/30">
                     <Sparkles className="h-16 w-16 text-chart-4" />
