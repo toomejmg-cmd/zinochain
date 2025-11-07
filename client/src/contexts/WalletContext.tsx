@@ -33,13 +33,19 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const connectWallet = async (address: string, referrerCode?: string) => {
     setConnecting(true);
     try {
-      const response = await apiRequest("/api/users", {
+      const response = await fetch("/api/users", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           walletAddress: address,
           referrerCode 
         }),
       });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to connect wallet");
+      }
       
       const userData = await response.json();
       setUser(userData);
