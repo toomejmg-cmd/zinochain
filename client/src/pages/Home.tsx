@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack";
 import {
   Rocket,
   Wallet,
@@ -13,6 +14,10 @@ import {
   Zap,
   Gift,
   ArrowRight,
+  Bot,
+  LineChart,
+  Shield,
+  Sparkles,
 } from "lucide-react";
 import { SiSolana } from "react-icons/si";
 import { useState } from "react";
@@ -196,6 +201,100 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      <section id="features" className="py-20 md:py-32 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6" data-testid="text-features-title">
+              Why Choose <span className="gradient-text">Zinobot</span>
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="text-features-description">
+              Discover the powerful features that make Zinobot your ultimate trading companion
+            </p>
+          </div>
+
+          <ScrollStack
+            itemDistance={50}
+            itemScale={0.05}
+            itemStackDistance={40}
+            stackPosition="30%"
+            baseScale={0.9}
+            className="max-w-5xl mx-auto"
+          >
+            <ScrollStackItem>
+              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-primary/5 backdrop-blur-sm" data-testid="card-stack-ai">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="p-8 bg-primary/10 rounded-2xl border border-primary/30">
+                    <Bot className="h-16 w-16 text-primary" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="text-stack-ai-title">
+                      AI-Powered Trading Bot
+                    </h3>
+                    <p className="text-lg text-muted-foreground" data-testid="text-stack-ai-description">
+                      Zinobot uses advanced AI algorithms to analyze market trends, identify profitable opportunities, and execute trades 24/7. Get real-time signals and never miss a trade again.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </ScrollStackItem>
+
+            <ScrollStackItem>
+              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-chart-2/5 backdrop-blur-sm" data-testid="card-stack-signals">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="p-8 bg-chart-2/10 rounded-2xl border border-chart-2/30">
+                    <LineChart className="h-16 w-16 text-chart-2" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="text-stack-signals-title">
+                      Real-Time Market Signals
+                    </h3>
+                    <p className="text-lg text-muted-foreground" data-testid="text-stack-signals-description">
+                      Receive instant alerts on profitable trades, price movements, and market opportunities. Our AI continuously monitors the Solana ecosystem to keep you ahead of the curve.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </ScrollStackItem>
+
+            <ScrollStackItem>
+              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-chart-3/5 backdrop-blur-sm" data-testid="card-stack-security">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="p-8 bg-chart-3/10 rounded-2xl border border-chart-3/30">
+                    <Shield className="h-16 w-16 text-chart-3" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="text-stack-security-title">
+                      Secure & Non-Custodial
+                    </h3>
+                    <p className="text-lg text-muted-foreground" data-testid="text-stack-security-description">
+                      Your funds stay in your wallet. Zinobot never has access to your private keys. Trade with confidence knowing your assets are always under your control.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </ScrollStackItem>
+
+            <ScrollStackItem>
+              <Card className="p-12 glow-border bg-gradient-to-br from-card/90 to-chart-4/5 backdrop-blur-sm" data-testid="card-stack-easy">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="p-8 bg-chart-4/10 rounded-2xl border border-chart-4/30">
+                    <Sparkles className="h-16 w-16 text-chart-4" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="text-stack-easy-title">
+                      Easy to Use
+                    </h3>
+                    <p className="text-lg text-muted-foreground" data-testid="text-stack-easy-description">
+                      Start trading in seconds with simple commands. No complex interfaces or confusing dashboards - just chat with Zinobot on Telegram and let the AI do the heavy lifting.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </ScrollStackItem>
+          </ScrollStack>
         </div>
       </section>
 
