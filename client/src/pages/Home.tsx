@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import PixelBlast from "@/components/PixelBlast";
+import PixelBlast from "@/components/PixelBlastFallback";
 import { MagicCard } from "@/components/MagicCard";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";

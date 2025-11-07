@@ -123,10 +123,10 @@ Different sections use different glow colors:
 - Get Started steps: Pink (244, 114, 182) - 10 particles
 
 ### Background Animations
-Each section now has unique PixelBlast WebGL animations:
-- **Hero**: Circle variant with liquid distortion, purple color, interactive ripples
-- **About**: Square variant, slow blue animation, subtle opacity
-- **Features**: Triangle variant, purple with medium speed ripples
-- **Rewards**: Diamond variant, golden with liquid effects and sparkle
-- **Referral**: Circle variant, green with liquid wobble animation
-- **Get Started**: Square variant, pink with very subtle slow movement
+PixelBlast WebGL animations have been temporarily disabled using a fallback component to ensure smooth page loading and scrolling across all browsers and devices. The animations were causing compatibility issues in environments without WebGL support. The site now focuses on:
+- **Smooth scrolling behavior** with CSS scroll-behavior: smooth
+- **MagicCard animations** which provide engaging interactivity
+- **Optimized performance** for better user experience
+- **Accessibility improvements** with prefers-reduced-motion support
+
+Future consideration: Re-enable PixelBlast with proper error handling and WebGL feature detection.
