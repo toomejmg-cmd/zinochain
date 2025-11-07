@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { WalletButton } from "@/components/WalletButton";
 
 export function Navbar() {
   const [location, setLocation] = useLocation();
@@ -72,6 +73,7 @@ export function Navbar() {
                 Launch Zinobot
               </a>
             </Button>
+            <WalletButton />
           </div>
 
           <Button
