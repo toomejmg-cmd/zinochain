@@ -42,7 +42,7 @@ export function Footer() {
             <h3 className="font-semibold text-foreground" data-testid="text-footer-connect-heading">Connect</h3>
             <div className="flex gap-4">
               <a
-                href="https://t.me/Zinobot"
+                href="https://t.me/zinochainbot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover-elevate p-3 bg-card rounded-md border border-card-border"

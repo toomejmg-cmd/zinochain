@@ -244,7 +244,7 @@ export default function Referral() {
                 data-testid="button-launch-bot"
               >
                 <a
-                  href="https://t.me/Zinobot"
+                  href="https://t.me/zinochainbot"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

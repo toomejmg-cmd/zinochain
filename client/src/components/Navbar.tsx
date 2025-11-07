@@ -66,7 +66,7 @@ export function Navbar() {
               data-testid="button-launch-bot-nav"
             >
               <a
-                href="https://t.me/Zinobot"
+                href="https://t.me/zinochainbot"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -116,7 +116,7 @@ export function Navbar() {
                 data-testid="button-launch-bot-mobile"
               >
                 <a
-                  href="https://t.me/Zinobot"
+                  href="https://t.me/zinochainbot"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}

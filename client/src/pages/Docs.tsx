@@ -111,7 +111,7 @@ export default function Docs() {
                   <p className="text-muted-foreground" data-testid="text-wallet-step-1-description">
                     Open{" "}
                     <a
-                      href="https://t.me/Zinobot"
+                      href="https://t.me/zinochainbot"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline"
