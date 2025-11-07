@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PixelBlast from "@/components/PixelBlast";
+import { MagicCard } from "@/components/MagicCard";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
@@ -218,19 +219,29 @@ export default function Home() {
               },
             ].map((feature, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <Card className="p-8 h-full hover-elevate glow-border bg-card/50 backdrop-blur-sm" data-testid={`card-feature-${index}`}>
-                  <div className="flex flex-col items-center text-center gap-4">
-                    <div className="p-4 bg-primary/10 rounded-full border border-primary/30">
-                      <feature.icon className="h-8 w-8 text-primary" />
+                <MagicCard
+                  enableParticles={true}
+                  enableTilt={true}
+                  enableMagnetism={true}
+                  enableClickRipple={true}
+                  enableGlow={true}
+                  particleCount={8}
+                  glowColor="177, 158, 239"
+                >
+                  <Card className="p-8 h-full hover-elevate glow-border bg-card/50 backdrop-blur-sm" data-testid={`card-feature-${index}`}>
+                    <div className="flex flex-col items-center text-center gap-4">
+                      <div className="p-4 bg-primary/10 rounded-full border border-primary/30">
+                        <feature.icon className="h-8 w-8 text-primary" />
+                      </div>
+                      <h3 className="text-xl font-semibold" data-testid={`text-feature-title-${index}`}>
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground" data-testid={`text-feature-description-${index}`}>
+                        {feature.description}
+                      </p>
                     </div>
-                    <h3 className="text-xl font-semibold" data-testid={`text-feature-title-${index}`}>
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground" data-testid={`text-feature-description-${index}`}>
-                      {feature.description}
-                    </p>
-                  </div>
-                </Card>
+                  </Card>
+                </MagicCard>
               </motion.div>
             ))}
           </motion.div>
@@ -388,14 +399,24 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="mb-12">
-              <Card className="p-12 max-w-2xl mx-auto glow-border bg-card/80 backdrop-blur-sm">
-                <div className="text-6xl md:text-8xl font-bold gradient-text mb-4" data-testid="text-rewards-counter">
-                  $1,234,567
-                </div>
-                <p className="text-lg text-muted-foreground" data-testid="text-rewards-distributed">
-                  Total Rewards Distributed
-                </p>
-              </Card>
+              <MagicCard
+                enableParticles={true}
+                enableTilt={true}
+                enableMagnetism={true}
+                enableClickRipple={true}
+                enableGlow={true}
+                particleCount={15}
+                glowColor="251, 191, 36"
+              >
+                <Card className="p-12 max-w-2xl mx-auto glow-border bg-card/80 backdrop-blur-sm">
+                  <div className="text-6xl md:text-8xl font-bold gradient-text mb-4" data-testid="text-rewards-counter">
+                    $1,234,567
+                  </div>
+                  <p className="text-lg text-muted-foreground" data-testid="text-rewards-distributed">
+                    Total Rewards Distributed
+                  </p>
+                </Card>
+              </MagicCard>
             </motion.div>
 
             <motion.div
@@ -407,16 +428,26 @@ export default function Home() {
                 { label: "Referrals", icon: Users },
                 { label: "Community Activity", icon: Zap },
               ].map((item, index) => (
-                <Card
+                <MagicCard
                   key={index}
-                  className="p-6 hover-elevate bg-card/50 backdrop-blur-sm"
-                  data-testid={`card-reward-type-${index}`}
+                  enableParticles={true}
+                  enableTilt={true}
+                  enableMagnetism={false}
+                  enableClickRipple={true}
+                  enableGlow={true}
+                  particleCount={6}
+                  glowColor="251, 191, 36"
                 >
-                  <div className="flex items-center justify-center gap-3">
-                    <item.icon className="h-5 w-5 text-primary" />
-                    <span className="font-semibold" data-testid={`text-reward-type-${index}`}>{item.label}</span>
-                  </div>
-                </Card>
+                  <Card
+                    className="p-6 hover-elevate bg-card/50 backdrop-blur-sm"
+                    data-testid={`card-reward-type-${index}`}
+                  >
+                    <div className="flex items-center justify-center gap-3">
+                      <item.icon className="h-5 w-5 text-primary" />
+                      <span className="font-semibold" data-testid={`text-reward-type-${index}`}>{item.label}</span>
+                    </div>
+                  </Card>
+                </MagicCard>
               ))}
             </motion.div>
           </motion.div>
@@ -546,22 +577,32 @@ export default function Home() {
                   variants={fadeInUp}
                   className="relative"
                 >
-                  <Card className="p-8 h-full hover-elevate bg-card/50 backdrop-blur-sm" data-testid={`card-step-${index}`}>
-                    <div className="absolute -top-6 -left-6 text-8xl font-bold text-primary/10">
-                      {step.step}
-                    </div>
-                    <div className="relative space-y-4">
-                      <div className="p-4 bg-primary/10 rounded-full border border-primary/30 inline-block">
-                        <step.icon className="h-8 w-8 text-primary" />
+                  <MagicCard
+                    enableParticles={true}
+                    enableTilt={true}
+                    enableMagnetism={true}
+                    enableClickRipple={true}
+                    enableGlow={true}
+                    particleCount={10}
+                    glowColor="244, 114, 182"
+                  >
+                    <Card className="p-8 h-full hover-elevate bg-card/50 backdrop-blur-sm" data-testid={`card-step-${index}`}>
+                      <div className="absolute -top-6 -left-6 text-8xl font-bold text-primary/10">
+                        {step.step}
                       </div>
-                      <h3 className="text-xl font-semibold" data-testid={`text-step-title-${index}`}>
-                        {step.title}
-                      </h3>
-                      <p className="text-muted-foreground" data-testid={`text-step-description-${index}`}>
-                        {step.description}
-                      </p>
-                    </div>
-                  </Card>
+                      <div className="relative space-y-4">
+                        <div className="p-4 bg-primary/10 rounded-full border border-primary/30 inline-block">
+                          <step.icon className="h-8 w-8 text-primary" />
+                        </div>
+                        <h3 className="text-xl font-semibold" data-testid={`text-step-title-${index}`}>
+                          {step.title}
+                        </h3>
+                        <p className="text-muted-foreground" data-testid={`text-step-description-${index}`}>
+                          {step.description}
+                        </p>
+                      </div>
+                    </Card>
+                  </MagicCard>
                 </motion.div>
               ))}
             </div>

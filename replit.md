@@ -84,10 +84,12 @@ Preferred communication style: Simple, everyday language.
 
 **UI & Animation Libraries**
 - **Radix UI** - Comprehensive set of accessible component primitives (accordion, dialog, dropdown, popover, etc.)
-- **Framer Motion** - Production-ready animation library for React
+- **Framer Motion** - Production-ready animation library for React (also powers MagicCard interactive effects)
 - **Lucide React** - Icon library for consistent iconography
 - **React Icons** - Additional icons (specifically Solana logo)
 - **Embla Carousel** - Carousel/slider functionality
+- **Three.js** - WebGL library for PixelBlast background animations
+- **Custom MagicCard** - Interactive card wrapper with particles, tilt, magnetism, click ripples, and glow effects
 
 **Development Tools**
 - **Replit** specific plugins for development environment integration
@@ -102,3 +104,29 @@ Preferred communication style: Simple, everyday language.
 
 **Session Management**
 - **connect-pg-simple** - PostgreSQL session store for Express sessions (configured but not actively used in current implementation)
+
+## Recent Updates (November 7, 2025)
+
+### Interactive Card Animations
+Added `MagicCard` component that wraps all cards (except hero section) with interactive effects:
+- **Particle System**: Animated floating particles that appear on hover
+- **3D Tilt Effect**: Cards tilt based on mouse position using Framer Motion springs
+- **Magnetic Effect**: Cards slightly move toward cursor position
+- **Click Ripple**: Expanding ripple animation on click
+- **Dynamic Glow**: Spotlight effect that follows the mouse cursor
+- **Border Glow**: Animated border that activates on hover
+
+Different sections use different glow colors:
+- About cards: Purple (177, 158, 239) - 8 particles
+- Rewards counter: Golden (251, 191, 36) - 15 particles (most dramatic)
+- Rewards types: Golden (251, 191, 36) - 6 particles, no magnetism
+- Get Started steps: Pink (244, 114, 182) - 10 particles
+
+### Background Animations
+Each section now has unique PixelBlast WebGL animations:
+- **Hero**: Circle variant with liquid distortion, purple color, interactive ripples
+- **About**: Square variant, slow blue animation, subtle opacity
+- **Features**: Triangle variant, purple with medium speed ripples
+- **Rewards**: Diamond variant, golden with liquid effects and sparkle
+- **Referral**: Circle variant, green with liquid wobble animation
+- **Get Started**: Square variant, pink with very subtle slow movement
