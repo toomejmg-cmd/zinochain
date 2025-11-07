@@ -148,8 +148,22 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section id="about" className="py-20 md:py-32 bg-card/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="relative py-20 md:py-32 bg-card/30 overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <PixelBlast
+            variant="square"
+            pixelSize={8}
+            color="#60A5FA"
+            patternScale={2}
+            patternDensity={0.6}
+            pixelSizeJitter={0.3}
+            enableRipples={false}
+            speed={0.2}
+            edgeFade={0.4}
+            transparent
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -223,8 +237,25 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="features" className="py-20 md:py-32 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="features" className="relative py-20 md:py-32 bg-background overflow-hidden">
+        <div className="absolute inset-0 opacity-15">
+          <PixelBlast
+            variant="triangle"
+            pixelSize={5}
+            color="#A78BFA"
+            patternScale={2.5}
+            patternDensity={0.9}
+            pixelSizeJitter={0.4}
+            enableRipples
+            rippleSpeed={0.3}
+            rippleThickness={0.15}
+            rippleIntensityScale={1.2}
+            speed={0.4}
+            edgeFade={0.35}
+            transparent
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-6" data-testid="text-features-title">
               Why Choose <span className="gradient-text">Zinobot</span>
@@ -304,6 +335,27 @@ export default function Home() {
 
       <section id="rewards" className="py-20 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 gradient-bg-secondary opacity-10" />
+        <div className="absolute inset-0 opacity-25">
+          <PixelBlast
+            variant="diamond"
+            pixelSize={4}
+            color="#FBBF24"
+            patternScale={3.5}
+            patternDensity={1.3}
+            pixelSizeJitter={0.6}
+            enableRipples
+            rippleSpeed={0.5}
+            rippleThickness={0.1}
+            rippleIntensityScale={2}
+            liquid
+            liquidStrength={0.08}
+            liquidRadius={0.8}
+            liquidWobbleSpeed={6}
+            speed={0.7}
+            edgeFade={0.2}
+            transparent
+          />
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -371,8 +423,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="referral-teaser" className="py-20 md:py-32 bg-card/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="referral-teaser" className="relative py-20 md:py-32 bg-card/30 overflow-hidden">
+        <div className="absolute inset-0 opacity-18">
+          <PixelBlast
+            variant="circle"
+            pixelSize={7}
+            color="#34D399"
+            patternScale={2.8}
+            patternDensity={1}
+            pixelSizeJitter={0.5}
+            enableRipples
+            rippleSpeed={0.35}
+            rippleThickness={0.14}
+            rippleIntensityScale={1.3}
+            liquid
+            liquidStrength={0.1}
+            liquidRadius={1}
+            liquidWobbleSpeed={4.5}
+            speed={0.5}
+            edgeFade={0.3}
+            transparent
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -414,8 +487,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="get-started" className="py-20 md:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="get-started" className="relative py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 opacity-12">
+          <PixelBlast
+            variant="square"
+            pixelSize={10}
+            color="#F472B6"
+            patternScale={1.8}
+            patternDensity={0.5}
+            pixelSizeJitter={0.2}
+            enableRipples={false}
+            speed={0.15}
+            edgeFade={0.45}
+            transparent
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
