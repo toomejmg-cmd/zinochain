@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WalletButton } from "@/components/WalletButton";
+import logoImage from "@assets/ChatGPT Image Nov 8, 2025, 08_28_59 AM_1762586994074.png";
 
 export function Navbar() {
   const [location, setLocation] = useLocation();
@@ -41,7 +42,13 @@ export function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center gap-2" data-testid="link-logo">
+          <Link href="/" className="flex items-center gap-3" data-testid="link-logo">
+            <img 
+              src={logoImage} 
+              alt="Zinochain Logo" 
+              className="h-10 w-10 object-contain"
+              data-testid="img-logo"
+            />
             <div className="text-2xl font-bold gradient-text" data-testid="text-logo">
               Zinochain
             </div>

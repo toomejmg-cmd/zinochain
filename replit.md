@@ -105,7 +105,16 @@ Preferred communication style: Simple, everyday language.
 **Session Management**
 - **connect-pg-simple** - PostgreSQL session store for Express sessions (configured but not actively used in current implementation)
 
-## Recent Updates (November 7, 2025)
+## Recent Updates (November 8, 2025)
+
+### Logo Integration
+Added the official Zinochain gradient logo (cyan-to-purple "Z" in circle) throughout the site:
+- **Navbar**: 40x40px logo displayed next to brand name with 12px gap
+- **Footer**: 48x48px logo displayed next to brand name with 12px gap
+- Logo uses transparent background and matches the site's gradient theme
+- Properly aligned with flexbox layout for consistent branding
+
+## Previous Updates (November 7, 2025)
 
 ### Interactive Card Animations
 Added `MagicCard` component that wraps all cards (except hero section) with interactive effects:

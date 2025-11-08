@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Send, Twitter } from "lucide-react";
+import logoImage from "@assets/ChatGPT Image Nov 8, 2025, 08_28_59 AM_1762586994074.png";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,8 +10,16 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
-            <div className="text-2xl font-bold gradient-text" data-testid="text-footer-logo">
-              Zinochain
+            <div className="flex items-center gap-3">
+              <img 
+                src={logoImage} 
+                alt="Zinochain Logo" 
+                className="h-12 w-12 object-contain"
+                data-testid="img-footer-logo"
+              />
+              <div className="text-2xl font-bold gradient-text" data-testid="text-footer-logo">
+                Zinochain
+              </div>
             </div>
             <p className="text-muted-foreground text-sm" data-testid="text-footer-tagline">
               AI-powered Solana trading ecosystem
