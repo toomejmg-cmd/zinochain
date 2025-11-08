@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { PublicKey } from "@solana/web3.js";
 import * as nacl from "tweetnacl";
-import * as bs58 from "bs58";
+import bs58 from "bs58";
 import { storage } from "./storage";
 
 // Verify Solana wallet signature
