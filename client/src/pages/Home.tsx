@@ -19,8 +19,8 @@ import {
   Shield,
   Sparkles,
 } from "lucide-react";
-import { SiSolana } from "react-icons/si";
 import { useState } from "react";
+import heroLogo from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -86,7 +86,12 @@ export default function Home() {
             className="flex justify-center mb-8"
           >
             <div className="p-6 bg-primary/10 rounded-full border border-primary/30 glow-border">
-              <SiSolana className="h-16 w-16 text-primary" />
+              <img 
+                src={heroLogo} 
+                alt="Zinochain" 
+                className="h-16 w-16 object-contain spinning-logo"
+                data-testid="img-hero-logo"
+              />
             </div>
           </motion.div>
 
@@ -212,7 +217,7 @@ export default function Home() {
                   "Join a vibrant community of traders who combine serious trading with meme culture. Make profits while having fun.",
               },
               {
-                icon: SiSolana,
+                icon: Zap,
                 title: "Built for Solana",
                 description:
                   "Lightning-fast transactions and minimal fees on the Solana blockchain. Trade at the speed of light.",

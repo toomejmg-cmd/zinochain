@@ -111,7 +111,11 @@ Preferred communication style: Simple, everyday language.
 Added the official Zinochain gradient logo (cyan-to-purple "Z" in circle) throughout the site:
 - **Navbar**: 40x40px logo displayed next to brand name with 12px gap
 - **Footer**: 48x48px logo displayed next to brand name with 12px gap
-- Logo uses transparent background and matches the site's gradient theme
+- **Hero Section**: 64x64px spinning logo in circular container with gradient border
+  - 8-second continuous rotation animation
+  - Smooth linear infinite spin
+  - Respects `prefers-reduced-motion` accessibility setting
+- Logo uses gradient theme colors matching the site design
 - Properly aligned with flexbox layout for consistent branding
 
 ## Previous Updates (November 7, 2025)

@@ -13,6 +13,20 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Spinning logo animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning-logo {
+  animation: spin 8s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -21,6 +35,9 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .spinning-logo {
+    animation: none;
   }
 }
 
