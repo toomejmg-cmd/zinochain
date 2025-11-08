@@ -122,12 +122,21 @@ export const investments = pgTable("investments", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Wallet nonce types
+export type WalletNonce = typeof walletNonces.$inferSelect;
+export type InsertWalletNonce = typeof walletNonces.$inferInsert;
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
   referralCode: true, // auto-generated
+});
+
+export const insertWalletNonceSchema = createInsertSchema(walletNonces).omit({
+  id: true,
+  createdAt: true,
 });
 
 export const insertReferralSchema = createInsertSchema(referrals).omit({
