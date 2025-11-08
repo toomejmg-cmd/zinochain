@@ -12,6 +12,17 @@ import { useState, useEffect } from "react";
 import { TrendingUp, TrendingDown, Wallet, Gift, Users, Rocket, ArrowUpDown, Copy, CheckCircle2 } from "lucide-react";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { useLocation } from "wouter";
+import { useWalletAuth } from "@/hooks/useWalletAuth";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import type { User, Token, Trade, TokenClaim, Investment } from "@shared/schema";
 
 interface TokenPrice {
@@ -29,6 +40,8 @@ export default function Dashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const { disconnectWallet } = useWalletAuth();
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const [copiedCode, setCopiedCode] = useState(false);
   const [selectedTradeToken, setSelectedTradeToken] = useState<string>("");
@@ -134,6 +147,11 @@ export default function Dashboard() {
     }
   };
 
+  const handleLogout = async () => {
+    setShowLogoutDialog(false);
+    await disconnectWallet();
+  };
+
   // Redirect to login if not authenticated (use effect to avoid render-time navigation)
   useEffect(() => {
     if (!authLoading && !user) {
@@ -168,12 +186,29 @@ export default function Dashboard() {
             <span className="text-sm text-muted-foreground" data-testid="text-user-email">
               {user.email || "User"}
             </span>
-            <Button onClick={() => setLocation("/api/logout")} variant="outline" data-testid="button-logout">
+            <Button onClick={() => setShowLogoutDialog(true)} variant="outline" data-testid="button-logout">
               Logout
             </Button>
           </div>
         </div>
       </div>
+
+      <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Disconnect Wallet?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to disconnect your wallet and log out? You will be redirected to the homepage.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel data-testid="button-cancel-logout">Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout} data-testid="button-confirm-logout">
+              Disconnect
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="space-y-6">
