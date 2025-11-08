@@ -44,7 +44,7 @@ export function useWalletAuth() {
 
       // Request nonce from server
       const nonceRes = await apiRequest("POST", "/api/auth/nonce", { walletAddress });
-      const nonceData = await nonceRes.json() as { nonce: string; message: string };
+      const nonceData = await nonceRes.json() as { nonce: string; message: string; expiresAt: string };
 
       // Sign the message
       const encodedMessage = new TextEncoder().encode(nonceData.message);
@@ -54,11 +54,12 @@ export function useWalletAuth() {
       const bs58 = await import("bs58");
       const signatureBase58 = bs58.default.encode(signature);
 
-      // Login with signature
+      // Login with signature (must send timestamp to match signed message)
       const loginRes = await apiRequest("POST", "/api/auth/wallet-login", {
         walletAddress,
         signature: signatureBase58,
         nonce: nonceData.nonce,
+        timestamp: nonceData.expiresAt,
       });
       const loginData = await loginRes.json();
 

@@ -59,10 +59,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/wallet-login", async (req: any, res) => {
     try {
-      const { walletAddress, signature, nonce } = req.body;
+      const { walletAddress, signature, nonce, timestamp } = req.body;
       
-      if (!walletAddress || !signature || !nonce) {
-        return res.status(400).json({ error: "Wallet address, signature, and nonce required" });
+      if (!walletAddress || !signature || !nonce || !timestamp) {
+        return res.status(400).json({ error: "Wallet address, signature, nonce, and timestamp required" });
       }
 
       // Verify nonce is valid and not expired
@@ -71,8 +71,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid or expired nonce" });
       }
 
-      // Create message that was signed
-      const message = `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}`;
+      // Create message that was signed (must match the message from nonce endpoint)
+      const message = `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}\nTimestamp: ${timestamp}`;
 
       // Verify the signature
       const isValid = await verifyWalletSignature(walletAddress, signature, message);
