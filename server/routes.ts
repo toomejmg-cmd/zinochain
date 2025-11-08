@@ -1,7 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated as isReplitAuthenticated } from "./replitAuth";
+import { verifyWalletSignature, isAuthenticated, getUserFromSession } from "./walletAuth";
 import {
   type InsertUser,
   insertUserSchema,
@@ -30,10 +31,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup Replit Auth middleware (from blueprint)
   await setupAuth(app);
 
-  // Auth routes (from blueprint)
+  // Wallet authentication endpoints
+  app.post("/api/auth/nonce", async (req, res) => {
+    try {
+      const { walletAddress } = req.body;
+      
+      if (!walletAddress || typeof walletAddress !== "string") {
+        return res.status(400).json({ error: "Valid wallet address required" });
+      }
+
+      // Cleanup expired nonces periodically
+      await storage.cleanupExpiredNonces();
+
+      // Generate new nonce
+      const { nonce, expiresAt } = await storage.createNonce(walletAddress);
+      
+      res.json({ 
+        nonce, 
+        message: `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}\nTimestamp: ${expiresAt.toISOString()}`,
+        expiresAt: expiresAt.toISOString() 
+      });
+    } catch (error) {
+      console.error("Error generating nonce:", error);
+      res.status(500).json({ error: "Failed to generate nonce" });
+    }
+  });
+
+  app.post("/api/auth/wallet-login", async (req: any, res) => {
+    try {
+      const { walletAddress, signature, nonce } = req.body;
+      
+      if (!walletAddress || !signature || !nonce) {
+        return res.status(400).json({ error: "Wallet address, signature, and nonce required" });
+      }
+
+      // Verify nonce is valid and not expired
+      const nonceValid = await storage.verifyAndConsumeNonce(walletAddress, nonce);
+      if (!nonceValid) {
+        return res.status(401).json({ error: "Invalid or expired nonce" });
+      }
+
+      // Create message that was signed
+      const message = `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}`;
+
+      // Verify the signature
+      const isValid = await verifyWalletSignature(walletAddress, signature, message);
+      if (!isValid) {
+        return res.status(401).json({ error: "Invalid signature" });
+      }
+
+      // Create or get user by wallet
+      const user = await storage.createOrGetUserByWallet(walletAddress);
+
+      // Set session
+      req.session.walletAddress = walletAddress.toLowerCase();
+      req.session.userId = user.id;
+
+      res.json({ 
+        success: true,
+        user: {
+          id: user.id,
+          walletAddress: user.walletAddress,
+          tier: user.tier,
+          totalReferrals: user.totalReferrals,
+          totalRewards: user.totalRewards,
+          referralCode: user.referralCode,
+        }
+      });
+    } catch (error) {
+      console.error("Error during wallet login:", error);
+      res.status(500).json({ error: "Failed to authenticate" });
+    }
+  });
+
+  // Auth routes (works with both Replit Auth and Wallet Auth)
   app.get("/api/auth/user", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = await getUserFromSession(req);
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+      
       const user = await storage.getUser(userId);
       res.json(user);
     } catch (error) {
