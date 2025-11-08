@@ -107,6 +107,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Updates (November 8, 2025)
 
+### ElectricBorder Animation (About Section)
+Added ElectricBorder animated border effect to About Zinochain cards:
+- **Component**: Custom React component (`ElectricBorder.tsx`) with SVG-based animated border
+- **Animation**: Uses SVG filters with turbulence and displacement mapping for electric/glowing effect
+- **Visual**: Purple (#B19EEF) glowing animated border with multiple glow layers (stroke, glow-1, glow-2, background-glow)
+- **Cards**: Removed solid backgrounds to let the electric border animation stand out
+- **Configuration**: Speed: 1, Chaos: 1, Thickness: 2px
+- **Effect**: Creates dynamic "electric" border that animates continuously around each About section card
+- Replaces previous MagicCard wrapper for About section only (other sections retain MagicCard)
+
 ### Logo Integration
 Added the official Zinochain gradient logo (cyan-to-purple "Z" in circle with black background) throughout the site:
 - **Navbar**: 40x40px logo with black background displayed next to brand name with 12px gap

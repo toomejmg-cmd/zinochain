@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PixelBlast from "@/components/PixelBlastFallback";
 import { MagicCard } from "@/components/MagicCard";
+import ElectricBorder from "@/components/ElectricBorder";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
@@ -224,29 +225,36 @@ export default function Home() {
               },
             ].map((feature, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <MagicCard
-                  enableParticles={true}
-                  enableTilt={true}
-                  enableMagnetism={true}
-                  enableClickRipple={true}
-                  enableGlow={true}
-                  particleCount={8}
-                  glowColor="177, 158, 239"
+                <ElectricBorder
+                  color="#B19EEF"
+                  speed={1}
+                  chaos={1}
+                  thickness={2}
                 >
-                  <Card className="p-8 h-full hover-elevate glow-border bg-card/50 backdrop-blur-sm" data-testid={`card-feature-${index}`}>
-                    <div className="flex flex-col items-center text-center gap-4">
-                      <div className="p-4 bg-primary/10 rounded-full border border-primary/30">
-                        <feature.icon className="h-8 w-8 text-primary" />
+                  <MagicCard
+                    enableParticles={true}
+                    enableTilt={true}
+                    enableMagnetism={true}
+                    enableClickRipple={true}
+                    enableGlow={true}
+                    particleCount={8}
+                    glowColor="177, 158, 239"
+                  >
+                    <Card className="p-8 h-full hover-elevate" data-testid={`card-feature-${index}`}>
+                      <div className="flex flex-col items-center text-center gap-4">
+                        <div className="p-4 bg-primary/10 rounded-full border border-primary/30">
+                          <feature.icon className="h-8 w-8 text-primary" />
+                        </div>
+                        <h3 className="text-xl font-semibold" data-testid={`text-feature-title-${index}`}>
+                          {feature.title}
+                        </h3>
+                        <p className="text-muted-foreground" data-testid={`text-feature-description-${index}`}>
+                          {feature.description}
+                        </p>
                       </div>
-                      <h3 className="text-xl font-semibold" data-testid={`text-feature-title-${index}`}>
-                        {feature.title}
-                      </h3>
-                      <p className="text-muted-foreground" data-testid={`text-feature-description-${index}`}>
-                        {feature.description}
-                      </p>
-                    </div>
-                  </Card>
-                </MagicCard>
+                    </Card>
+                  </MagicCard>
+                </ElectricBorder>
               </motion.div>
             ))}
           </motion.div>
