@@ -26,13 +26,20 @@ interface TokenPrice {
 }
 
 export default function Dashboard() {
-  const { user, isLoading: authLoading } = useAuth();
+  const { user, isLoading: authLoading, isAuthenticated } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [copiedCode, setCopiedCode] = useState(false);
   const [selectedTradeToken, setSelectedTradeToken] = useState<string>("");
   const [tradeAmount, setTradeAmount] = useState("");
   const [tradeType, setTradeType] = useState<"buy" | "sell">("buy");
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      window.location.href = "/api/login";
+    }
+  }, [authLoading, isAuthenticated]);
 
   // Fetch data
   const { data: prices = [] } = useQuery<TokenPrice[]>({
