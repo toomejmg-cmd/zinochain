@@ -2,9 +2,9 @@
 
 ## Overview
 
-Zinochain is a modern, single-page marketing website for an AI-powered Solana trading ecosystem featuring a Telegram bot called Zinobot. The application is built as a full-stack web application with a React frontend and Express backend, designed to showcase the Zinobot product through an engaging, animated landing page experience.
+Zinochain is a modern, full-stack web application for an AI-powered Solana trading ecosystem featuring a Telegram bot called Zinobot. The application includes both a marketing website with engaging animations and an authenticated user dashboard for trading, claiming tokens, and managing investments.
 
-The project prioritizes visual appeal with a dark theme, neon gradients, and meme culture aesthetics (inspired by platforms like Phantom and Solana.com). The site includes multiple sections: Home (main landing), Referral program details, and Documentation pages.
+The project prioritizes visual appeal with a dark theme, neon gradients, and meme culture aesthetics (inspired by platforms like Phantom and Solana.com). The site includes: Home (main landing), Referral program details, Documentation pages, and an authenticated Dashboard with crypto trading features.
 
 ## User Preferences
 
@@ -35,9 +35,10 @@ Preferred communication style: Simple, everyday language.
 - Responsive design with mobile-first breakpoints
 
 **State Management**
-- **TanStack Query (React Query)** for server state management and data fetching
+- **TanStack Query (React Query v5)** for server state management and data fetching
 - Local component state using React hooks
-- No global state management library (unnecessary for this marketing site)
+- Custom authentication hooks (useAuth) for session management
+- No global state management library
 
 ### Backend Architecture
 
@@ -52,10 +53,17 @@ Preferred communication style: Simple, everyday language.
 - Production: Pre-built static assets served from Express
 - Custom error handling with runtime error overlay in development
 
+**Authentication**
+- **Replit Auth (OpenID Connect)** for user authentication with Google, GitHub, and email support
+- Session management using PostgreSQL session store
+- Protected API routes with `isAuthenticated` middleware
+- Token refresh on expiry for seamless user experience
+
 **API Structure**
 - RESTful API design with `/api` prefix for all backend routes
-- Currently minimal backend logic (placeholder routes in `server/routes.ts`)
-- Designed to be extended with actual business logic as needed
+- Public endpoints: landing page data, token prices, community stats
+- Protected endpoints: user dashboard, trades, claims, investments
+- Admin endpoints: token management, claim creation
 
 ### Data Storage
 
@@ -66,14 +74,20 @@ Preferred communication style: Simple, everyday language.
 - Migration system using Drizzle Kit
 
 **Current Schema**
-- Users table with UUID primary keys, username, and password fields
-- Schema defined in shared directory for access by both client and server
-- Zod integration for runtime validation
+- **users**: Authentication data (email, name, profile), wallet address, referral codes, tier, rewards, admin flag
+- **sessions**: Express session storage for Replit Auth
+- **tokens**: Raydium/Solana token information (symbol, name, mint address, pool address)
+- **trades**: User trade history (buy/sell, amount, price, status, transaction hash)
+- **tokenClaims**: Admin-controlled free token distribution
+- **investments**: Future coin investment tracking
+- **referrals**: Referral relationship tracking
+- **communityStats**: Aggregate platform statistics
+- **analyticsEvents**: User activity tracking
 
 **Storage Abstraction**
-- `IStorage` interface defining CRUD operations
-- `MemStorage` in-memory implementation for development/testing
-- Designed to be swapped with actual database implementation without changing application code
+- `IStorage` interface with comprehensive CRUD operations
+- `DbStorage` implementation using Drizzle ORM
+- Type-safe operations with schema validation using Zod
 
 ### External Dependencies
 
@@ -81,6 +95,8 @@ Preferred communication style: Simple, everyday language.
 - **Telegram** - Main integration point for Zinobot (external bot, linked from website)
 - **MoonPay** - Crypto purchase widget integration (external service)
 - **Neon Database** - Serverless PostgreSQL hosting
+- **DexScreener API** - Real-time Raydium token price data
+- **Replit Auth** - OAuth authentication service
 
 **UI & Animation Libraries**
 - **Radix UI** - Comprehensive set of accessible component primitives (accordion, dialog, dropdown, popover, etc.)
@@ -106,6 +122,59 @@ Preferred communication style: Simple, everyday language.
 - **connect-pg-simple** - PostgreSQL session store for Express sessions (configured but not actively used in current implementation)
 
 ## Recent Updates (November 8, 2025)
+
+### User Dashboard (Authenticated Features)
+Added comprehensive authenticated dashboard at `/dashboard` with Replit Auth integration:
+
+**Authentication System**
+- **Replit Auth Integration**: OpenID Connect authentication supporting Google, GitHub, and email/password
+- **Session Management**: PostgreSQL-backed sessions with automatic token refresh
+- **Protected Routes**: Middleware-based authentication for all dashboard endpoints
+- **Auth Hooks**: Custom React hooks (`useAuth`, `authUtils`) for session state management
+
+**Dashboard Sections**
+1. **Overview**: User stats (rewards, referrals, active trades, investments)
+2. **Trade**: Direct platform trading interface with live token prices from DexScreener
+   - Token selection with real-time pricing
+   - Buy/sell functionality
+   - Trade history tracking
+3. **Claims**: Admin-controlled free token distribution
+   - View available claims
+   - One-click token claiming
+   - Expiration tracking
+4. **Invest**: Future coin investment opportunities
+   - Investment tracking
+   - Expected launch dates
+   - Status monitoring
+5. **Referral**: Personal referral code display and stats
+   - Copy-to-clipboard functionality
+   - Referral count and rewards earned
+6. **Wallet**: Solana wallet management
+   - Wallet address connection
+   - MoonPay integration for crypto purchases
+
+**API Endpoints**
+- `/api/auth/user` - Get authenticated user profile
+- `/api/auth/wallet` - Update user wallet address
+- `/api/tokens/prices` - Live token prices (DexScreener proxy)
+- `/api/dashboard/trades` - User trade management
+- `/api/dashboard/claims` - Token claim management
+- `/api/dashboard/investments` - Investment tracking
+- `/api/admin/tokens` - Admin token creation
+- `/api/admin/claims` - Admin claim distribution
+
+**Database Tables**
+- Extended users table with authentication fields
+- New tokens table for Raydium/Solana tokens
+- Trades table for platform trading history
+- Token claims table for admin-controlled distribution
+- Investments table for future coin opportunities
+
+**Live Token Prices**
+- DexScreener API integration for real-time Raydium token data
+- 30-second auto-refresh for price updates
+- Price change indicators (24h)
+- Volume and liquidity display
 
 ### GridScan 3D Animation (Hero Section)
 Added GridScan WebGL-based 3D grid animation to hero section background:
