@@ -1,7 +1,7 @@
-# Zinochain - AI-Powered Solana Trading Ecosystem
+# Zinochain - Telegram-Based Solana Trading Ecosystem
 
 ## Overview
-Zinochain is a full-stack web application for an AI-powered Solana trading ecosystem, featuring a Telegram bot called Zinobot. The project includes a marketing website with engaging animations and an authenticated user dashboard for trading, claiming tokens, and managing investments. It prioritizes visual appeal with a dark theme, neon gradients, and meme culture aesthetics, encompassing a Home page, Referral program, Documentation, and a crypto trading Dashboard.
+Zinochain is a full-stack web application featuring a Telegram bot called Zinobot for AI-powered Solana trading. The project includes a marketing website with engaging animations and an admin dashboard for monitoring. All trading happens exclusively through the Telegram bot. The website prioritizes visual appeal with a dark theme, neon gradients, and meme culture aesthetics, featuring Home, Referral, and Documentation pages.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -9,6 +9,7 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend
+- **Purpose**: Marketing website and admin dashboard (no user wallet connection)
 - **Frameworks**: React 18 with TypeScript, Vite for build/dev server, Wouter for routing.
 - **UI/UX**: Shadcn/ui (New York style), Radix UI primitives, Tailwind CSS for styling, Framer Motion for animations.
 - **Design**: Dark mode with purple/blue neon gradients, HSL custom color system, Inter/Poppins fonts, responsive design.
@@ -18,31 +19,29 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend
 - **Framework**: Express.js with Node.js and TypeScript (ESM).
-- **Authentication**:
-    - **Primary**: Wallet-Based Authentication (Phantom wallet) using Ed25519 signature verification and nonce challenges.
-    - **Fallback**: Replit Auth (OpenID Connect) for admin access.
-    - Session management via PostgreSQL.
-- **API**: RESTful API design (`/api` prefix) with public, protected, and admin endpoints.
+- **Authentication**: Replit Auth (OpenID Connect) for admin dashboard access only.
+- **Session Management**: PostgreSQL-backed sessions (connect-pg-simple).
+- **API**: RESTful API design (`/api` prefix) with public and admin-protected endpoints.
 
 ### Data Storage
 - **Database**: PostgreSQL (via Neon serverless driver).
 - **ORM**: Drizzle ORM for type-safe operations, Drizzle Kit for migrations.
-- **Schema**: `users`, `wallet_nonces`, `sessions`, `tokens`, `trades`, `tokenClaims`, `investments`, `referrals`, `communityStats`, `analyticsEvents`.
+- **Schema**: `users`, `sessions`, `tokens`, `trades`, `tokenClaims`, `investments`, `referrals`, `communityStats`, `analyticsEvents`.
 - **Abstraction**: `IStorage` interface with `DbStorage` implementation using Drizzle ORM.
 
 ### Key Features
-- **User Dashboard**: Overview, Trade (live prices from DexScreener), Claims, Invest, Referral, Wallet.
-- **Live Token Prices**: DexScreener API integration for real-time Raydium token data.
-- **Branding**: Official Zinochain gradient logo integrated throughout the site with animations.
+- **Trading**: All trading happens through the Telegram bot (@zinochainbot)
+- **Admin Dashboard**: Monitor trades, manage token claims, view stats (Replit Auth protected)
+- **Live Token Prices**: DexScreener API integration for real-time Raydium token data
+- **Branding**: Official Zinochain gradient logo integrated throughout the site with animations
 
 ## External Dependencies
 
 ### Third-Party Services
-- **Telegram**: Integration for Zinobot.
-- **Phantom Wallet**: Solana wallet provider.
-- **Neon Database**: Serverless PostgreSQL hosting.
-- **DexScreener API**: Real-time token price data.
-- **Replit Auth**: OAuth authentication service (admin fallback).
+- **Telegram**: Primary interface for Zinobot trading bot
+- **Neon Database**: Serverless PostgreSQL hosting
+- **DexScreener API**: Real-time token price data
+- **Replit Auth**: OAuth authentication service for admin dashboard
 
 ### UI & Animation Libraries
 - **Radix UI**: Accessible component primitives.

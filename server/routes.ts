@@ -1,8 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated as isReplitAuthenticated } from "./replitAuth";
-import { verifyWalletSignature, isAuthenticated, getUserFromSession } from "./walletAuth";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 import {
   type InsertUser,
   insertUserSchema,
@@ -28,142 +27,18 @@ function calculateTier(referralCount: number): string {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Setup Replit Auth middleware (from blueprint)
+  // Setup Replit Auth middleware (admin only)
   await setupAuth(app);
 
-  // Wallet authentication endpoints
-  app.post("/api/auth/nonce", async (req, res) => {
-    try {
-      const { walletAddress } = req.body;
-      
-      if (!walletAddress || typeof walletAddress !== "string") {
-        return res.status(400).json({ error: "Valid wallet address required" });
-      }
-
-      // Generate new nonce immediately (cleanup happens asynchronously)
-      const { nonce, expiresAt } = await storage.createNonce(walletAddress);
-      
-      // Cleanup expired nonces asynchronously without blocking the response
-      storage.cleanupExpiredNonces().catch(err => 
-        console.error("Error cleaning up nonces:", err)
-      );
-      
-      res.json({ 
-        nonce, 
-        message: `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}\nTimestamp: ${expiresAt.toISOString()}`,
-        expiresAt: expiresAt.toISOString() 
-      });
-    } catch (error) {
-      console.error("Error generating nonce:", error);
-      res.status(500).json({ error: "Failed to generate nonce" });
-    }
-  });
-
-  app.post("/api/auth/wallet-login", async (req: any, res) => {
-    try {
-      const { walletAddress, signature, nonce } = req.body;
-      
-      if (!walletAddress || !signature || !nonce) {
-        return res.status(400).json({ error: "Wallet address, signature, and nonce required" });
-      }
-
-      // Get nonce record from database (not consumed yet)
-      const nonceRecord = await storage.getNonceRecord(walletAddress, nonce);
-      if (!nonceRecord) {
-        return res.status(401).json({ error: "Invalid or expired nonce" });
-      }
-
-      // Create message using server-side timestamp (never trust client input)
-      const message = `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}\nTimestamp: ${nonceRecord.expiresAt.toISOString()}`;
-
-      // Verify the signature
-      const isValid = await verifyWalletSignature(walletAddress, signature, message);
-      if (!isValid) {
-        return res.status(401).json({ error: "Invalid signature" });
-      }
-
-      // Parallelize these operations
-      const [user] = await Promise.all([
-        storage.createOrGetUserByWallet(walletAddress),
-        storage.consumeNonce(walletAddress, nonce)
-      ]);
-
-      // Set session
-      req.session.walletAddress = walletAddress.toLowerCase();
-      req.session.userId = user.id;
-
-      // Explicitly save session and return immediately
-      req.session.save((err: any) => {
-        if (err) {
-          console.error("Session save error:", err);
-          return res.status(500).json({ error: "Failed to save session" });
-        }
-        
-        res.json({ 
-          success: true,
-          user: {
-            id: user.id,
-            walletAddress: user.walletAddress,
-            tier: user.tier,
-            totalReferrals: user.totalReferrals,
-            totalRewards: user.totalRewards,
-            referralCode: user.referralCode,
-          }
-        });
-      });
-    } catch (error) {
-      console.error("Error during wallet login:", error);
-      res.status(500).json({ error: "Failed to authenticate" });
-    }
-  });
-
-  app.post("/api/auth/logout", async (req: any, res) => {
-    try {
-      req.session.destroy((err: any) => {
-        if (err) {
-          console.error("Error destroying session:", err);
-          return res.status(500).json({ error: "Failed to logout" });
-        }
-        res.json({ success: true });
-      });
-    } catch (error) {
-      console.error("Error during logout:", error);
-      res.status(500).json({ error: "Failed to logout" });
-    }
-  });
-
-  // Auth routes (works with both Replit Auth and Wallet Auth)
+  // Auth routes (Replit Auth only - for admins)
   app.get("/api/auth/user", isAuthenticated, async (req: any, res) => {
     try {
-      const userId = await getUserFromSession(req);
-      if (!userId) {
-        return res.status(401).json({ error: "Not authenticated" });
-      }
-      
+      const userId = req.user.claims.sub;
       const user = await storage.getUser(userId);
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
       res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
-
-  // Update user wallet
-  app.put("/api/auth/wallet", isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { walletAddress } = req.body;
-      
-      if (!walletAddress || typeof walletAddress !== "string") {
-        return res.status(400).json({ error: "Valid wallet address required" });
-      }
-
-      await storage.updateUserWallet(userId, walletAddress);
-      const updatedUser = await storage.getUser(userId);
-      res.json(updatedUser);
-    } catch (error) {
-      console.error("Error updating wallet:", error);
-      res.status(500).json({ error: "Failed to update wallet" });
     }
   });
 
@@ -333,73 +208,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Public user creation (legacy endpoint)
-  app.post("/api/users", async (req, res) => {
-    try {
-      const { walletAddress, referrerCode } = req.body;
-      
-      if (!walletAddress || typeof walletAddress !== "string") {
-        return res.status(400).json({ error: "Valid wallet address required" });
-      }
-      
-      const existingUser = await storage.getUserByWallet(walletAddress);
-      if (existingUser) {
-        return res.json(existingUser);
-      }
-      
-      let referrerId: string | undefined;
-      
-      if (referrerCode && typeof referrerCode === "string") {
-        const referrer = await storage.getUserByReferralCode(referrerCode);
-        if (!referrer) {
-          return res.status(400).json({ error: "Invalid referral code" });
-        }
-        referrerId = referrer.id;
-      }
-      
-      const userData: InsertUser = {
-        walletAddress,
-        referredBy: referrerId,
-        tier: "bronze",
-        totalReferrals: 0,
-        totalRewards: 0,
-        isAdmin: false,
-      };
-      
-      const user = await storage.createUser(userData);
-      
-      if (referrerId) {
-        const referrer = await storage.getUserById(referrerId);
-        if (referrer) {
-          await storage.createReferral({
-            referrerId: referrerId,
-            refereeId: user.id,
-            rewardAmount: 10,
-          });
-          
-          const newTotalReferrals = referrer.totalReferrals + 1;
-          const newTotalRewards = referrer.totalRewards + 10;
-          const newTier = calculateTier(newTotalReferrals);
-          
-          await storage.updateUserStats(referrerId, newTotalReferrals, newTotalRewards, newTier);
-        }
-      }
-      
-      res.json(user);
-    } catch (error) {
-      console.error("User creation error:", error);
-      res.status(400).json({ error: "Failed to create user" });
-    }
-  });
-  
-  app.get("/api/users/:walletAddress", async (req, res) => {
-    const user = await storage.getUserByWallet(req.params.walletAddress);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    res.json(user);
-  });
-  
+  // Get user referrals
   app.get("/api/users/:id/referrals", async (req, res) => {
     const referralsList = await storage.getReferralsByReferrerId(req.params.id);
     res.json(referralsList);

@@ -9,20 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
-import { TrendingUp, TrendingDown, Wallet, Gift, Users, Rocket, ArrowUpDown, Copy, CheckCircle2 } from "lucide-react";
+import { TrendingUp, TrendingDown, Wallet, Gift, Users, Rocket, ArrowUpDown, Copy, CheckCircle2, LogOut } from "lucide-react";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { useLocation } from "wouter";
-import { useWalletAuth } from "@/hooks/useWalletAuth";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import type { User, Token, Trade, TokenClaim, Investment } from "@shared/schema";
 
 interface TokenPrice {
@@ -40,9 +29,6 @@ export default function Dashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
-  const { disconnectWallet } = useWalletAuth();
-  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const [walletAddress, setWalletAddress] = useState("");
   const [copiedCode, setCopiedCode] = useState(false);
   const [selectedTradeToken, setSelectedTradeToken] = useState<string>("");
   const [tradeAmount, setTradeAmount] = useState("");
@@ -64,25 +50,6 @@ export default function Dashboard() {
 
   const { data: investments = [] } = useQuery<Investment[]>({
     queryKey: ["/api/dashboard/investments"],
-  });
-
-  // Update wallet mutation
-  const updateWalletMutation = useMutation({
-    mutationFn: async (address: string) => {
-      return await apiRequest("/api/auth/wallet", "PUT", { walletAddress: address });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
-      toast({ title: "Success", description: "Wallet connected successfully" });
-    },
-    onError: (error: Error) => {
-      if (isUnauthorizedError(error)) {
-        toast({ title: "Session Expired", description: "Please log in again", variant: "destructive" });
-        setTimeout(() => setLocation("/api/login"), 1500);
-      } else {
-        toast({ title: "Error", description: "Failed to connect wallet", variant: "destructive" });
-      }
-    },
   });
 
   // Create trade mutation
@@ -147,11 +114,6 @@ export default function Dashboard() {
     }
   };
 
-  const handleLogout = async () => {
-    setShowLogoutDialog(false);
-    await disconnectWallet();
-  };
-
   // Redirect to login if not authenticated (use effect to avoid render-time navigation)
   useEffect(() => {
     if (!authLoading && !user) {
@@ -179,46 +141,31 @@ export default function Dashboard() {
       <div className="border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">Zinochain Dashboard</h1>
+            <h1 className="text-2xl font-bold">Zinochain Admin Dashboard</h1>
             <Badge data-testid="badge-user-tier">{user.tier}</Badge>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground" data-testid="text-user-email">
-              {user.email || "User"}
+              {user.email || "Admin"}
             </span>
-            <Button onClick={() => setShowLogoutDialog(true)} variant="outline" data-testid="button-logout">
-              Logout
+            <Button asChild variant="outline" data-testid="button-logout">
+              <a href="/api/logout">
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </a>
             </Button>
           </div>
         </div>
       </div>
 
-      <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Disconnect Wallet?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to disconnect your wallet and log out? You will be redirected to the homepage.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel data-testid="button-cancel-logout">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleLogout} data-testid="button-confirm-logout">
-              Disconnect
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview" data-testid="tab-overview">Overview</TabsTrigger>
             <TabsTrigger value="trade" data-testid="tab-trade">Trade</TabsTrigger>
             <TabsTrigger value="claims" data-testid="tab-claims">Claims</TabsTrigger>
             <TabsTrigger value="invest" data-testid="tab-invest">Invest</TabsTrigger>
             <TabsTrigger value="referral" data-testid="tab-referral">Referral</TabsTrigger>
-            <TabsTrigger value="wallet" data-testid="tab-wallet">Wallet</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -556,67 +503,6 @@ export default function Dashboard() {
                   Share your referral code with friends to earn rewards. Each successful referral earns you 10 reward
                   points!
                 </p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="wallet" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Wallet Management</CardTitle>
-                <CardDescription>Connect your Solana wallet or purchase crypto</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {user.walletAddress ? (
-                  <div className="p-4 rounded-lg border">
-                    <p className="text-sm text-muted-foreground mb-2">Connected Wallet</p>
-                    <p className="font-mono text-sm break-all" data-testid="text-connected-wallet">
-                      {user.walletAddress}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="wallet-input">Solana Wallet Address</Label>
-                      <Input
-                        id="wallet-input"
-                        placeholder="Enter your Solana wallet address"
-                        value={walletAddress}
-                        onChange={(e) => setWalletAddress(e.target.value)}
-                        data-testid="input-wallet-address"
-                      />
-                    </div>
-                    <Button
-                      onClick={() => {
-                        if (!walletAddress) {
-                          toast({ title: "Error", description: "Please enter wallet address", variant: "destructive" });
-                          return;
-                        }
-                        updateWalletMutation.mutate(walletAddress);
-                      }}
-                      disabled={updateWalletMutation.isPending}
-                      data-testid="button-connect-wallet"
-                    >
-                      <Wallet className="h-4 w-4 mr-2" />
-                      {updateWalletMutation.isPending ? "Connecting..." : "Connect Wallet"}
-                    </Button>
-                  </div>
-                )}
-
-                <div className="border-t pt-4">
-                  <h3 className="font-semibold mb-2">Purchase Crypto with MoonPay</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Buy crypto directly with your credit card or bank account
-                  </p>
-                  <Button
-                    onClick={() => window.open("https://www.moonpay.com/buy", "_blank")}
-                    variant="outline"
-                    className="w-full"
-                    data-testid="button-moonpay"
-                  >
-                    Open MoonPay
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>

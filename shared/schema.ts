@@ -15,16 +15,14 @@ export const sessions = pgTable(
   (table) => [index("IDX_session_expire").on(table.expire)],
 );
 
-// Users table (supports both wallet and Replit Auth)
+// Users table (Replit Auth for admins)
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  // Replit Auth fields (nullable for wallet-only users)
+  // Replit Auth fields
   email: varchar("email").unique(),
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
-  // Wallet authentication (required for wallet-only users)
-  walletAddress: text("wallet_address").unique(),
   // Zinochain fields
   referralCode: text("referral_code").notNull().unique().$defaultFn(() => nanoid(10)),
   referredBy: varchar("referred_by"),
@@ -34,16 +32,6 @@ export const users = pgTable("users", {
   isAdmin: boolean("is_admin").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
-// Wallet authentication nonces table (for signature verification)
-export const walletNonces = pgTable("wallet_nonces", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  walletAddress: text("wallet_address").notNull(),
-  nonce: text("nonce").notNull().unique(),
-  used: boolean("used").notNull().default(false),
-  expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export const referrals = pgTable("referrals", {
@@ -122,21 +110,12 @@ export const investments = pgTable("investments", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-// Wallet nonce types
-export type WalletNonce = typeof walletNonces.$inferSelect;
-export type InsertWalletNonce = typeof walletNonces.$inferInsert;
-
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
   referralCode: true, // auto-generated
-});
-
-export const insertWalletNonceSchema = createInsertSchema(walletNonces).omit({
-  id: true,
-  createdAt: true,
 });
 
 export const insertReferralSchema = createInsertSchema(referrals).omit({

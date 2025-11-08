@@ -11,7 +11,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
   Rocket,
-  Wallet,
   TrendingUp,
   Brain,
   Users,
@@ -22,9 +21,9 @@ import {
   LineChart,
   Shield,
   Sparkles,
+  MessageCircle,
 } from "lucide-react";
 import { useState } from "react";
-import { useWalletAuth } from "@/hooks/useWalletAuth";
 import heroLogo from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
 
 const fadeInUp = {
@@ -47,8 +46,6 @@ const staggerContainer = {
 };
 
 export default function Home() {
-  const { connectWallet, isConnecting } = useWalletAuth();
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -140,7 +137,7 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 <Rocket className="mr-2 h-5 w-5" />
-                Launch Zinobot on Telegram
+                Start Trading on Telegram
               </a>
             </Button>
 
@@ -148,12 +145,17 @@ export default function Home() {
               size="lg"
               variant="outline"
               className="text-lg px-8 py-6 bg-background/50 backdrop-blur-sm"
-              onClick={connectWallet}
-              disabled={isConnecting}
-              data-testid="button-connect-wallet"
+              asChild
+              data-testid="button-join-community"
             >
-              <Wallet className="mr-2 h-5 w-5" />
-              {isConnecting ? "Connecting..." : "Connect Wallet"}
+              <a
+                href="https://t.me/zinochainbot"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Join Community
+              </a>
             </Button>
           </motion.div>
         </motion.div>
@@ -585,24 +587,24 @@ export default function Home() {
               {[
                 {
                   step: "01",
-                  icon: Wallet,
-                  title: "Connect Your Wallet",
+                  icon: Bot,
+                  title: "Start Zinobot on Telegram",
                   description:
-                    "Connect your Phantom wallet or enter your Solana wallet address to access the platform.",
+                    "Open @zinochainbot on Telegram to access the AI-powered Solana trading platform.",
                 },
                 {
                   step: "02",
                   icon: Rocket,
-                  title: "Launch Zinobot on Telegram",
+                  title: "Connect Your Wallet",
                   description:
-                    "Open Zinobot in Telegram and connect your Solana wallet to get started.",
+                    "Link your Solana wallet directly through the Telegram bot to start trading.",
                 },
                 {
                   step: "03",
                   icon: TrendingUp,
-                  title: "Trade and Earn Rewards",
+                  title: "Trade with AI Signals",
                   description:
-                    "Start trading with AI-powered signals and earn rewards based on your activity.",
+                    "Execute trades with AI-powered insights and earn rewards based on your activity.",
                 },
               ].map((step, index) => (
                 <motion.div

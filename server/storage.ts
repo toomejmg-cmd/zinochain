@@ -16,8 +16,6 @@ import {
   type InsertTokenClaim,
   type Investment,
   type InsertInvestment,
-  type WalletNonce,
-  type InsertWalletNonce,
   users,
   referrals,
   communityStats,
@@ -26,7 +24,6 @@ import {
   trades,
   tokenClaims,
   investments,
-  walletNonces,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql, and, isNull, lt } from "drizzle-orm";
@@ -39,19 +36,9 @@ export interface IStorage {
   
   // Legacy user operations
   getUserById(id: string): Promise<User | undefined>;
-  getUserByWallet(walletAddress: string): Promise<User | undefined>;
   getUserByReferralCode(referralCode: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserStats(id: string, totalReferrals: number, totalRewards: number, tier: string): Promise<void>;
-  updateUserWallet(id: string, walletAddress: string): Promise<void>;
-  
-  // Wallet authentication operations
-  createNonce(walletAddress: string): Promise<{ nonce: string; expiresAt: Date }>;
-  getNonceRecord(walletAddress: string, nonce: string): Promise<{ nonce: string; expiresAt: Date } | null>;
-  consumeNonce(walletAddress: string, nonce: string): Promise<void>;
-  verifyAndConsumeNonce(walletAddress: string, nonce: string): Promise<boolean>;
-  createOrGetUserByWallet(walletAddress: string): Promise<User>;
-  cleanupExpiredNonces(): Promise<void>;
   
   // Referral operations
   createReferral(referral: InsertReferral): Promise<Referral>;
@@ -122,11 +109,6 @@ export class DbStorage implements IStorage {
     return result[0];
   }
 
-  async getUserByWallet(walletAddress: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.walletAddress, walletAddress));
-    return result[0];
-  }
-
   async getUserByReferralCode(referralCode: string): Promise<User | undefined> {
     const result = await db.select().from(users).where(eq(users.referralCode, referralCode));
     return result[0];
@@ -141,117 +123,6 @@ export class DbStorage implements IStorage {
     await db.update(users)
       .set({ totalReferrals, totalRewards, tier })
       .where(eq(users.id, id));
-  }
-
-  async updateUserWallet(id: string, walletAddress: string): Promise<void> {
-    await db.update(users)
-      .set({ walletAddress, updatedAt: new Date() })
-      .where(eq(users.id, id));
-  }
-
-  // Wallet authentication methods
-  async createNonce(walletAddress: string): Promise<{ nonce: string; expiresAt: Date }> {
-    const nonce = nanoid(32);
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes from now
-
-    await db.insert(walletNonces).values({
-      walletAddress: walletAddress.toLowerCase(),
-      nonce,
-      expiresAt,
-    });
-
-    return { nonce, expiresAt };
-  }
-
-  async getNonceRecord(walletAddress: string, nonce: string): Promise<{ nonce: string; expiresAt: Date } | null> {
-    const [nonceRecord] = await db
-      .select()
-      .from(walletNonces)
-      .where(
-        and(
-          eq(walletNonces.walletAddress, walletAddress.toLowerCase()),
-          eq(walletNonces.nonce, nonce),
-          eq(walletNonces.used, false),
-          lt(sql`NOW()`, walletNonces.expiresAt)
-        )
-      );
-
-    if (!nonceRecord) {
-      return null;
-    }
-
-    return {
-      nonce: nonceRecord.nonce,
-      expiresAt: nonceRecord.expiresAt,
-    };
-  }
-
-  async consumeNonce(walletAddress: string, nonce: string): Promise<void> {
-    await db
-      .update(walletNonces)
-      .set({ used: true })
-      .where(
-        and(
-          eq(walletNonces.walletAddress, walletAddress.toLowerCase()),
-          eq(walletNonces.nonce, nonce)
-        )
-      );
-  }
-
-  async verifyAndConsumeNonce(walletAddress: string, nonce: string): Promise<boolean> {
-    const [nonceRecord] = await db
-      .select()
-      .from(walletNonces)
-      .where(
-        and(
-          eq(walletNonces.walletAddress, walletAddress.toLowerCase()),
-          eq(walletNonces.nonce, nonce),
-          eq(walletNonces.used, false),
-          lt(sql`NOW()`, walletNonces.expiresAt)
-        )
-      );
-
-    if (!nonceRecord) {
-      return false;
-    }
-
-    // Mark nonce as used
-    await db
-      .update(walletNonces)
-      .set({ used: true })
-      .where(eq(walletNonces.id, nonceRecord.id));
-
-    return true;
-  }
-
-  async createOrGetUserByWallet(walletAddress: string): Promise<User> {
-    const normalizedAddress = walletAddress.toLowerCase();
-    
-    // Check if user exists
-    const existingUser = await this.getUserByWallet(normalizedAddress);
-    if (existingUser) {
-      return existingUser;
-    }
-
-    // Create new user
-    const [newUser] = await db
-      .insert(users)
-      .values({
-        walletAddress: normalizedAddress,
-        tier: "bronze",
-        totalReferrals: 0,
-        totalRewards: 0,
-        isAdmin: false,
-      })
-      .returning();
-
-    return newUser;
-  }
-
-  async cleanupExpiredNonces(): Promise<void> {
-    await db
-      .delete(walletNonces)
-      .where(lt(walletNonces.expiresAt, sql`NOW()`));
   }
 
   // Referral methods
