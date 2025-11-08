@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import PixelBlast from "@/components/PixelBlastFallback";
 import { MagicCard } from "@/components/MagicCard";
 import ElectricBorder from "@/components/ElectricBorder";
+import StarBorder from "@/components/StarBorder";
 import { GridScan } from "@/components/GridScan";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -290,8 +291,15 @@ export default function Home() {
           </div>
 
           <div className="max-w-5xl mx-auto space-y-8">
-            <div className="p-12 bg-background border border-border rounded-lg" data-testid="card-stack-ai">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+            <StarBorder
+              as="div"
+              color="#B19EEF"
+              speed="6s"
+              thickness={2}
+              className="rounded-lg"
+              data-testid="card-stack-ai"
+            >
+              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
                 <div className="p-8 bg-primary/10 rounded-2xl border border-primary/30">
                   <Bot className="h-16 w-16 text-primary" />
                 </div>
@@ -304,10 +312,17 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
+            </StarBorder>
 
-            <div className="p-12 bg-background border border-border rounded-lg" data-testid="card-stack-signals">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+            <StarBorder
+              as="div"
+              color="#B19EEF"
+              speed="6s"
+              thickness={2}
+              className="rounded-lg"
+              data-testid="card-stack-signals"
+            >
+              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
                 <div className="p-8 bg-chart-2/10 rounded-2xl border border-chart-2/30">
                   <LineChart className="h-16 w-16 text-chart-2" />
                 </div>
@@ -320,10 +335,17 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
+            </StarBorder>
 
-            <div className="p-12 bg-background border border-border rounded-lg" data-testid="card-stack-security">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+            <StarBorder
+              as="div"
+              color="#B19EEF"
+              speed="6s"
+              thickness={2}
+              className="rounded-lg"
+              data-testid="card-stack-security"
+            >
+              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
                 <div className="p-8 bg-chart-3/10 rounded-2xl border border-chart-3/30">
                   <Shield className="h-16 w-16 text-chart-3" />
                 </div>
@@ -336,10 +358,17 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
+            </StarBorder>
 
-            <div className="p-12 bg-background border border-border rounded-lg" data-testid="card-stack-easy">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+            <StarBorder
+              as="div"
+              color="#B19EEF"
+              speed="6s"
+              thickness={2}
+              className="rounded-lg"
+              data-testid="card-stack-easy"
+            >
+              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
                 <div className="p-8 bg-chart-4/10 rounded-2xl border border-chart-4/30">
                   <Sparkles className="h-16 w-16 text-chart-4" />
                 </div>
@@ -352,7 +381,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
+            </StarBorder>
           </div>
         </div>
       </section>
