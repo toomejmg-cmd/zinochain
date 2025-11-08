@@ -129,6 +129,17 @@ Added StarBorder static sparkle border to "Why Choose Zinobot" feature cards:
 - **Effect**: Creates static decorative border with star sparkles - no animation or rotation
 - **Technical**: Uses multiple layered radial-gradients with box-shadow for glowing star-point effect around borders
 
+### BubbleAnimation (Rewards Section)
+Added BubbleAnimation floating background to "Earn Rewards" section:
+- **Component**: Canvas-based React component (`BubbleAnimation.tsx`) with random floating bubbles
+- **Animation**: 25 bubbles moving randomly in X and Y directions with viewport wrapping
+- **Visual**: Golden (#FBBF24) semi-transparent bubbles with radial gradient fills
+- **Size range**: 30px to 120px diameter for visual variety
+- **Speed**: 0.8 for gentle, slow floating movement
+- **Opacity**: 0.1-0.4 for subtle background effect
+- **Effect**: Creates dynamic floating bubble background without obstructing content
+- **Technical**: Uses HTML5 Canvas with requestAnimationFrame for smooth animation
+
 ### ElectricBorder Animation (About Section)
 Added ElectricBorder animated border effect to About Zinochain cards:
 - **Component**: Custom React component (`ElectricBorder.tsx`) with SVG-based animated border

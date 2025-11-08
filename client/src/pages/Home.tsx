@@ -6,6 +6,7 @@ import { MagicCard } from "@/components/MagicCard";
 import ElectricBorder from "@/components/ElectricBorder";
 import StarBorder from "@/components/StarBorder";
 import { GridScan } from "@/components/GridScan";
+import { BubbleAnimation } from "@/components/BubbleAnimation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
@@ -388,25 +389,13 @@ export default function Home() {
 
       <section id="rewards" className="py-20 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 gradient-bg-secondary opacity-10" />
-        <div className="absolute inset-0 opacity-25">
-          <PixelBlast
-            variant="diamond"
-            pixelSize={4}
+        <div className="absolute inset-0">
+          <BubbleAnimation
+            count={25}
             color="#FBBF24"
-            patternScale={3.5}
-            patternDensity={1.3}
-            pixelSizeJitter={0.6}
-            enableRipples
-            rippleSpeed={0.5}
-            rippleThickness={0.1}
-            rippleIntensityScale={2}
-            liquid
-            liquidStrength={0.08}
-            liquidRadius={0.8}
-            liquidWobbleSpeed={6}
-            speed={0.7}
-            edgeFade={0.2}
-            transparent
+            minSize={30}
+            maxSize={120}
+            speed={0.8}
           />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
