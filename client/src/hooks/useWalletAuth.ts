@@ -24,9 +24,7 @@ export function useWalletAuth() {
 
   const connectWallet = async () => {
     try {
-      setIsConnecting(true);
-
-      // Check if Phantom is installed
+      // Check if Phantom is installed (before any state updates)
       const provider = window.phantom?.solana;
       if (!provider?.isPhantom) {
         toast({
@@ -38,14 +36,21 @@ export function useWalletAuth() {
         return;
       }
 
-      // Show initial connection toast
+      // CRITICAL: Call provider.connect() FIRST before any state updates
+      // This prevents heavy re-renders from blocking the wallet popup
+      const connectPromise = provider.connect();
+      
+      // Now update state (this triggers re-render but connect is already initiated)
+      setIsConnecting(true);
+
+      // Show initial connection toast (non-blocking)
       toast({
         title: "Connecting...",
         description: "Opening Phantom wallet...",
       });
 
-      // Connect to Phantom
-      const { publicKey } = await provider.connect();
+      // Wait for wallet connection
+      const { publicKey } = await connectPromise;
       const walletAddress = publicKey.toString();
 
       // Show nonce generation toast
