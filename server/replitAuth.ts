@@ -27,6 +27,8 @@ export function getSession() {
     createTableIfMissing: false,
     ttl: sessionTtl,
     tableName: "sessions",
+    pruneSessionInterval: false, // Disable automatic pruning to prevent blocking
+    disableTouch: true, // Reduce unnecessary DB writes on each request
   });
   return session({
     secret: process.env.SESSION_SECRET!,

@@ -82,26 +82,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid signature" });
       }
 
-      // Signature is valid, now consume the nonce
-      await storage.consumeNonce(walletAddress, nonce);
-
-      // Create or get user by wallet
-      const user = await storage.createOrGetUserByWallet(walletAddress);
+      // Parallelize these operations
+      const [user] = await Promise.all([
+        storage.createOrGetUserByWallet(walletAddress),
+        storage.consumeNonce(walletAddress, nonce)
+      ]);
 
       // Set session
       req.session.walletAddress = walletAddress.toLowerCase();
       req.session.userId = user.id;
 
-      res.json({ 
-        success: true,
-        user: {
-          id: user.id,
-          walletAddress: user.walletAddress,
-          tier: user.tier,
-          totalReferrals: user.totalReferrals,
-          totalRewards: user.totalRewards,
-          referralCode: user.referralCode,
+      // Explicitly save session and return immediately
+      req.session.save((err: any) => {
+        if (err) {
+          console.error("Session save error:", err);
+          return res.status(500).json({ error: "Failed to save session" });
         }
+        
+        res.json({ 
+          success: true,
+          user: {
+            id: user.id,
+            walletAddress: user.walletAddress,
+            tier: user.tier,
+            totalReferrals: user.totalReferrals,
+            totalRewards: user.totalRewards,
+            referralCode: user.referralCode,
+          }
+        });
       });
     } catch (error) {
       console.error("Error during wallet login:", error);
