@@ -40,11 +40,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Valid wallet address required" });
       }
 
-      // Cleanup expired nonces periodically
-      await storage.cleanupExpiredNonces();
-
-      // Generate new nonce
+      // Generate new nonce immediately (cleanup happens asynchronously)
       const { nonce, expiresAt } = await storage.createNonce(walletAddress);
+      
+      // Cleanup expired nonces asynchronously without blocking the response
+      storage.cleanupExpiredNonces().catch(err => 
+        console.error("Error cleaning up nonces:", err)
+      );
       
       res.json({ 
         nonce, 
