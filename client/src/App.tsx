@@ -7,6 +7,7 @@ import { WalletProvider } from "@/contexts/WalletContext";
 import Home from "@/pages/Home";
 import Referral from "@/pages/Referral";
 import Docs from "@/pages/Docs";
+import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/referral" component={Referral} />
       <Route path="/docs" component={Docs} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route component={NotFound} />
     </Switch>
   );
