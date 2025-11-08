@@ -38,17 +38,41 @@ export function useWalletAuth() {
         return;
       }
 
+      // Show initial connection toast
+      toast({
+        title: "Connecting...",
+        description: "Opening Phantom wallet...",
+      });
+
       // Connect to Phantom
       const { publicKey } = await provider.connect();
       const walletAddress = publicKey.toString();
+
+      // Show nonce generation toast
+      toast({
+        title: "Authenticating...",
+        description: "Generating secure challenge...",
+      });
 
       // Request nonce from server
       const nonceRes = await apiRequest("POST", "/api/auth/nonce", { walletAddress });
       const nonceData = await nonceRes.json() as { nonce: string; message: string; expiresAt: string };
 
+      // Show signing toast
+      toast({
+        title: "Waiting for signature...",
+        description: "Please sign the message in Phantom",
+      });
+
       // Sign the message
       const encodedMessage = new TextEncoder().encode(nonceData.message);
       const { signature } = await provider.signMessage(encodedMessage, "utf8");
+
+      // Show verification toast
+      toast({
+        title: "Verifying...",
+        description: "Validating your signature...",
+      });
 
       // Convert signature to base58
       const bs58 = await import("bs58");
