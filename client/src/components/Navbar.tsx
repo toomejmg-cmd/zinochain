@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WalletButton } from "@/components/WalletButton";
-import logoImage from "@assets/ChatGPT Image Nov 8, 2025, 08_28_59 AM_1762586994074.png";
+import logoImage from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
 
 export function Navbar() {
   const [location, setLocation] = useLocation();

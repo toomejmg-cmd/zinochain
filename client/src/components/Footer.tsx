@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Send, Twitter } from "lucide-react";
-import logoImage from "@assets/ChatGPT Image Nov 8, 2025, 08_28_59 AM_1762586994074.png";
+import logoImage from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
