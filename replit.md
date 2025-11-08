@@ -107,6 +107,17 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Updates (November 8, 2025)
 
+### GridScan 3D Animation (Hero Section)
+Added GridScan WebGL-based 3D grid animation to hero section background:
+- **Component**: Three.js shader-based component (`GridScan.tsx`) with interactive 3D perspective grid
+- **Animation**: Pingpong scanning animation with glowing scan lines sweeping across the grid
+- **Visual**: Purple grid lines (#B19EEF) with pink/magenta scan lines (#FF9FFC)
+- **Interactivity**: Grid tilts and skews based on mouse cursor position with physics-based smooth damping
+- **Post-Processing**: Bloom effects, chromatic aberration, and film grain for depth
+- **WebGL Fallback**: Gracefully degrades when WebGL unavailable (headless browsers, older devices)
+- **Configuration**: scanDuration 3s, scanDelay 1.5s, gridScale 0.12, lineJitter 0.15 for subtle movement
+- Provides immersive, futuristic background for hero section while maintaining content readability
+
 ### ElectricBorder Animation (About Section)
 Added ElectricBorder animated border effect to About Zinochain cards:
 - **Component**: Custom React component (`ElectricBorder.tsx`) with SVG-based animated border
@@ -115,7 +126,7 @@ Added ElectricBorder animated border effect to About Zinochain cards:
 - **Cards**: Removed solid backgrounds to let the electric border animation stand out
 - **Configuration**: Speed: 1, Chaos: 1, Thickness: 2px
 - **Effect**: Creates dynamic "electric" border that animates continuously around each About section card
-- Replaces previous MagicCard wrapper for About section only (other sections retain MagicCard)
+- Works alongside MagicCard interactive effects (particles, tilt, magnetism)
 
 ### Logo Integration
 Added the official Zinochain gradient logo (cyan-to-purple "Z" in circle with black background) throughout the site:

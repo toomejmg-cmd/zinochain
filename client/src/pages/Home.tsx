@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import PixelBlast from "@/components/PixelBlastFallback";
 import { MagicCard } from "@/components/MagicCard";
 import ElectricBorder from "@/components/ElectricBorder";
+import { GridScan } from "@/components/GridScan";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
@@ -54,25 +55,24 @@ export default function Home() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-chart-2/20" />
-        <div className="absolute inset-0 opacity-40">
-          <PixelBlast
-            variant="circle"
-            pixelSize={6}
-            color="#B19EEF"
-            patternScale={3}
-            patternDensity={1.2}
-            pixelSizeJitter={0.5}
-            enableRipples
-            rippleSpeed={0.4}
-            rippleThickness={0.12}
-            rippleIntensityScale={1.5}
-            liquid
-            liquidStrength={0.12}
-            liquidRadius={1.2}
-            liquidWobbleSpeed={5}
-            speed={0.6}
-            edgeFade={0.25}
-            transparent
+        <div className="absolute inset-0">
+          <GridScan
+            linesColor="#B19EEF"
+            scanColor="#FF9FFC"
+            scanOpacity={0.6}
+            gridScale={0.12}
+            lineThickness={1.2}
+            lineJitter={0.15}
+            scanDirection="pingpong"
+            scanDuration={3.0}
+            scanDelay={1.5}
+            scanGlow={0.8}
+            scanSoftness={2.5}
+            scanPhaseTaper={0.15}
+            bloomIntensity={0.3}
+            chromaticAberration={0.003}
+            noiseIntensity={0.02}
+            className="opacity-60"
           />
         </div>
 
