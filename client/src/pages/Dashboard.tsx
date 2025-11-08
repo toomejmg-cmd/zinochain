@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TrendingUp, TrendingDown, Wallet, Gift, Users, Rocket, ArrowUpDown, Copy, CheckCircle2 } from "lucide-react";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { useLocation } from "wouter";
@@ -134,6 +134,13 @@ export default function Dashboard() {
     }
   };
 
+  // Redirect to login if not authenticated (use effect to avoid render-time navigation)
+  useEffect(() => {
+    if (!authLoading && !user) {
+      setLocation("/api/login");
+    }
+  }, [authLoading, user, setLocation]);
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -146,7 +153,6 @@ export default function Dashboard() {
   }
 
   if (!user) {
-    setLocation("/api/login");
     return null;
   }
 
