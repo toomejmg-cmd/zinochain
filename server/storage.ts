@@ -47,6 +47,8 @@ export interface IStorage {
   
   // Wallet authentication operations
   createNonce(walletAddress: string): Promise<{ nonce: string; expiresAt: Date }>;
+  getNonceRecord(walletAddress: string, nonce: string): Promise<{ nonce: string; expiresAt: Date } | null>;
+  consumeNonce(walletAddress: string, nonce: string): Promise<void>;
   verifyAndConsumeNonce(walletAddress: string, nonce: string): Promise<boolean>;
   createOrGetUserByWallet(walletAddress: string): Promise<User>;
   cleanupExpiredNonces(): Promise<void>;
@@ -159,6 +161,41 @@ export class DbStorage implements IStorage {
     });
 
     return { nonce, expiresAt };
+  }
+
+  async getNonceRecord(walletAddress: string, nonce: string): Promise<{ nonce: string; expiresAt: Date } | null> {
+    const [nonceRecord] = await db
+      .select()
+      .from(walletNonces)
+      .where(
+        and(
+          eq(walletNonces.walletAddress, walletAddress.toLowerCase()),
+          eq(walletNonces.nonce, nonce),
+          eq(walletNonces.used, false),
+          lt(sql`NOW()`, walletNonces.expiresAt)
+        )
+      );
+
+    if (!nonceRecord) {
+      return null;
+    }
+
+    return {
+      nonce: nonceRecord.nonce,
+      expiresAt: nonceRecord.expiresAt,
+    };
+  }
+
+  async consumeNonce(walletAddress: string, nonce: string): Promise<void> {
+    await db
+      .update(walletNonces)
+      .set({ used: true })
+      .where(
+        and(
+          eq(walletNonces.walletAddress, walletAddress.toLowerCase()),
+          eq(walletNonces.nonce, nonce)
+        )
+      );
   }
 
   async verifyAndConsumeNonce(walletAddress: string, nonce: string): Promise<boolean> {

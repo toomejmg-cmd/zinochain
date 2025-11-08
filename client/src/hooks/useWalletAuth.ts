@@ -54,12 +54,11 @@ export function useWalletAuth() {
       const bs58 = await import("bs58");
       const signatureBase58 = bs58.default.encode(signature);
 
-      // Login with signature (must send timestamp to match signed message)
+      // Login with signature (server will use its own timestamp from database)
       const loginRes = await apiRequest("POST", "/api/auth/wallet-login", {
         walletAddress,
         signature: signatureBase58,
         nonce: nonceData.nonce,
-        timestamp: nonceData.expiresAt,
       });
       const loginData = await loginRes.json();
 

@@ -59,26 +59,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/wallet-login", async (req: any, res) => {
     try {
-      const { walletAddress, signature, nonce, timestamp } = req.body;
+      const { walletAddress, signature, nonce } = req.body;
       
-      if (!walletAddress || !signature || !nonce || !timestamp) {
-        return res.status(400).json({ error: "Wallet address, signature, nonce, and timestamp required" });
+      if (!walletAddress || !signature || !nonce) {
+        return res.status(400).json({ error: "Wallet address, signature, and nonce required" });
       }
 
-      // Verify nonce is valid and not expired
-      const nonceValid = await storage.verifyAndConsumeNonce(walletAddress, nonce);
-      if (!nonceValid) {
+      // Get nonce record from database (not consumed yet)
+      const nonceRecord = await storage.getNonceRecord(walletAddress, nonce);
+      if (!nonceRecord) {
         return res.status(401).json({ error: "Invalid or expired nonce" });
       }
 
-      // Create message that was signed (must match the message from nonce endpoint)
-      const message = `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}\nTimestamp: ${timestamp}`;
+      // Create message using server-side timestamp (never trust client input)
+      const message = `Sign this message to authenticate with Zinochain:\n\nNonce: ${nonce}\nTimestamp: ${nonceRecord.expiresAt.toISOString()}`;
 
       // Verify the signature
       const isValid = await verifyWalletSignature(walletAddress, signature, message);
       if (!isValid) {
         return res.status(401).json({ error: "Invalid signature" });
       }
+
+      // Signature is valid, now consume the nonce
+      await storage.consumeNonce(walletAddress, nonce);
 
       // Create or get user by wallet
       const user = await storage.createOrGetUserByWallet(walletAddress);
