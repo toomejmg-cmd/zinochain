@@ -1,8 +1,20 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { type InsertUser, insertUserSchema, insertReferralSchema, insertCommunityStatsSchema, insertAnalyticsEventSchema } from "@shared/schema";
+import { setupAuth, isAuthenticated } from "./replitAuth";
+import {
+  type InsertUser,
+  insertUserSchema,
+  insertReferralSchema,
+  insertCommunityStatsSchema,
+  insertAnalyticsEventSchema,
+  insertTokenSchema,
+  insertTradeSchema,
+  insertTokenClaimSchema,
+  insertInvestmentSchema,
+} from "@shared/schema";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 function generateReferralCode(): string {
   return nanoid(8).toUpperCase();
@@ -15,7 +27,207 @@ function calculateTier(referralCount: number): string {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  
+  // Setup Replit Auth middleware (from blueprint)
+  await setupAuth(app);
+
+  // Auth routes (from blueprint)
+  app.get("/api/auth/user", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // Update user wallet
+  app.put("/api/auth/wallet", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { walletAddress } = req.body;
+      
+      if (!walletAddress || typeof walletAddress !== "string") {
+        return res.status(400).json({ error: "Valid wallet address required" });
+      }
+
+      await storage.updateUserWallet(userId, walletAddress);
+      const updatedUser = await storage.getUser(userId);
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error updating wallet:", error);
+      res.status(500).json({ error: "Failed to update wallet" });
+    }
+  });
+
+  // Token price endpoints (proxy to DexScreener API)
+  app.get("/api/tokens/prices", async (req, res) => {
+    try {
+      const tokens = await storage.getActiveTokens();
+      const pricesPromises = tokens.map(async (token) => {
+        try {
+          const response = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${token.mintAddress}`, {
+            timeout: 5000,
+          });
+          const pair = response.data?.pairs?.[0];
+          return {
+            tokenId: token.id,
+            symbol: token.symbol,
+            name: token.name,
+            mintAddress: token.mintAddress,
+            price: pair?.priceUsd || "0",
+            priceChange24h: pair?.priceChange?.h24 || 0,
+            volume24h: pair?.volume?.h24 || 0,
+            liquidity: pair?.liquidity?.usd || 0,
+          };
+        } catch {
+          return {
+            tokenId: token.id,
+            symbol: token.symbol,
+            name: token.name,
+            mintAddress: token.mintAddress,
+            price: "0",
+            priceChange24h: 0,
+            volume24h: 0,
+            liquidity: 0,
+          };
+        }
+      });
+      const prices = await Promise.all(pricesPromises);
+      res.json(prices);
+    } catch (error) {
+      console.error("Error fetching prices:", error);
+      res.status(500).json({ error: "Failed to fetch token prices" });
+    }
+  });
+
+  // Dashboard: Get user trades
+  app.get("/api/dashboard/trades", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const trades = await storage.getUserTrades(userId);
+      res.json(trades);
+    } catch (error) {
+      console.error("Error fetching trades:", error);
+      res.status(500).json({ error: "Failed to fetch trades" });
+    }
+  });
+
+  // Dashboard: Create trade
+  app.post("/api/dashboard/trades", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const tradeData = insertTradeSchema.parse({ ...req.body, userId });
+      const trade = await storage.createTrade(tradeData);
+      res.json(trade);
+    } catch (error) {
+      console.error("Error creating trade:", error);
+      res.status(400).json({ error: "Failed to create trade" });
+    }
+  });
+
+  // Dashboard: Get unclaimed tokens
+  app.get("/api/dashboard/claims", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const claims = await storage.getUnclaimedTokens(userId);
+      res.json(claims);
+    } catch (error) {
+      console.error("Error fetching claims:", error);
+      res.status(500).json({ error: "Failed to fetch claims" });
+    }
+  });
+
+  // Dashboard: Claim token
+  app.post("/api/dashboard/claims/:id/claim", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const claimId = req.params.id;
+      
+      const existingClaim = await storage.getUserClaims(userId);
+      const claim = existingClaim.find((c) => c.id === claimId);
+      
+      if (!claim) {
+        return res.status(404).json({ error: "Claim not found" });
+      }
+      
+      if (claim.claimedAt) {
+        return res.status(400).json({ error: "Token already claimed" });
+      }
+      
+      const claimedToken = await storage.claimToken(claimId);
+      res.json(claimedToken);
+    } catch (error) {
+      console.error("Error claiming token:", error);
+      res.status(500).json({ error: "Failed to claim token" });
+    }
+  });
+
+  // Dashboard: Get user investments
+  app.get("/api/dashboard/investments", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const investments = await storage.getUserInvestments(userId);
+      res.json(investments);
+    } catch (error) {
+      console.error("Error fetching investments:", error);
+      res.status(500).json({ error: "Failed to fetch investments" });
+    }
+  });
+
+  // Dashboard: Create investment
+  app.post("/api/dashboard/investments", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const investmentData = insertInvestmentSchema.parse({ ...req.body, userId });
+      const investment = await storage.createInvestment(investmentData);
+      res.json(investment);
+    } catch (error) {
+      console.error("Error creating investment:", error);
+      res.status(400).json({ error: "Failed to create investment" });
+    }
+  });
+
+  // Admin: Create token
+  app.post("/api/admin/tokens", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+      
+      const tokenData = insertTokenSchema.parse(req.body);
+      const token = await storage.createToken(tokenData);
+      res.json(token);
+    } catch (error) {
+      console.error("Error creating token:", error);
+      res.status(400).json({ error: "Failed to create token" });
+    }
+  });
+
+  // Admin: Create token claim
+  app.post("/api/admin/claims", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+      
+      const claimData = insertTokenClaimSchema.parse({ ...req.body, createdBy: userId });
+      const claim = await storage.createTokenClaim(claimData);
+      res.json(claim);
+    } catch (error) {
+      console.error("Error creating claim:", error);
+      res.status(400).json({ error: "Failed to create claim" });
+    }
+  });
+
+  // Public user creation (legacy endpoint)
   app.post("/api/users", async (req, res) => {
     try {
       const { walletAddress, referrerCode } = req.body;
