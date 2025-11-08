@@ -24,6 +24,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useState } from "react";
+import { useWalletAuth } from "@/hooks/useWalletAuth";
 import heroLogo from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
 
 const fadeInUp = {
@@ -46,7 +47,7 @@ const staggerContainer = {
 };
 
 export default function Home() {
-  const [showMoonPay, setShowMoonPay] = useState(false);
+  const { connectWallet, isConnecting } = useWalletAuth();
 
   return (
     <div className="min-h-screen bg-background">
@@ -147,11 +148,12 @@ export default function Home() {
               size="lg"
               variant="outline"
               className="text-lg px-8 py-6 bg-background/50 backdrop-blur-sm"
-              onClick={() => setShowMoonPay(true)}
-              data-testid="button-buy-crypto"
+              onClick={connectWallet}
+              disabled={isConnecting}
+              data-testid="button-connect-wallet"
             >
               <Wallet className="mr-2 h-5 w-5" />
-              Buy Crypto with MoonPay
+              {isConnecting ? "Connecting..." : "Connect Wallet"}
             </Button>
           </motion.div>
         </motion.div>
@@ -584,9 +586,9 @@ export default function Home() {
                 {
                   step: "01",
                   icon: Wallet,
-                  title: "Buy SOL via MoonPay",
+                  title: "Connect Your Wallet",
                   description:
-                    "Purchase Solana tokens easily using MoonPay with your credit card or bank transfer.",
+                    "Connect your Phantom wallet or enter your Solana wallet address to access the platform.",
                 },
                 {
                   step: "02",
@@ -642,39 +644,6 @@ export default function Home() {
       </section>
 
       <Footer />
-
-      {showMoonPay && (
-        <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setShowMoonPay(false)}
-        >
-          <div
-            className="bg-card rounded-lg border border-border p-8 max-w-md w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-2xl font-bold mb-4">MoonPay Integration</h3>
-            <p className="text-muted-foreground mb-6">
-              MoonPay widget integration would be embedded here. Visit{" "}
-              <a
-                href="https://www.moonpay.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                moonpay.com
-              </a>{" "}
-              to purchase SOL.
-            </p>
-            <Button
-              onClick={() => setShowMoonPay(false)}
-              className="w-full"
-              data-testid="button-close-moonpay"
-            >
-              Close
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

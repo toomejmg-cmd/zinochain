@@ -104,6 +104,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/auth/logout", async (req: any, res) => {
+    try {
+      req.session.destroy((err: any) => {
+        if (err) {
+          console.error("Error destroying session:", err);
+          return res.status(500).json({ error: "Failed to logout" });
+        }
+        res.json({ success: true });
+      });
+    } catch (error) {
+      console.error("Error during logout:", error);
+      res.status(500).json({ error: "Failed to logout" });
+    }
+  });
+
   // Auth routes (works with both Replit Auth and Wallet Auth)
   app.get("/api/auth/user", isAuthenticated, async (req: any, res) => {
     try {
@@ -331,7 +346,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const userData: InsertUser = {
         walletAddress,
-        referralCode: generateReferralCode(),
         referredBy: referrerId,
         tier: "bronze",
         totalReferrals: 0,
