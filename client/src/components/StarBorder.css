@@ -2,48 +2,31 @@
   display: block;
   position: relative;
   border-radius: 20px;
-}
-
-.star-border-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
   padding: var(--border-thickness, 2px);
-  background: conic-gradient(
-    from var(--rotate-angle, 0deg),
-    transparent 0deg,
-    transparent 60deg,
-    var(--border-color, #B19EEF) 90deg,
-    var(--border-color, #B19EEF) 180deg,
-    transparent 210deg,
-    transparent 270deg,
-    var(--border-color, #B19EEF) 300deg,
-    var(--border-color, #B19EEF) 360deg
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  animation: star-rotate var(--animation-speed, 6s) linear infinite;
-  pointer-events: none;
-  z-index: 0;
+  background: 
+    radial-gradient(circle at 5% 15%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 25% 8%, var(--border-color, #B19EEF) 0%, transparent 1.5px),
+    radial-gradient(circle at 50% 5%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 75% 8%, var(--border-color, #B19EEF) 0%, transparent 1.5px),
+    radial-gradient(circle at 95% 15%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 98% 40%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 98% 60%, var(--border-color, #B19EEF) 0%, transparent 1.5px),
+    radial-gradient(circle at 95% 85%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 75% 92%, var(--border-color, #B19EEF) 0%, transparent 1.5px),
+    radial-gradient(circle at 50% 95%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 25% 92%, var(--border-color, #B19EEF) 0%, transparent 1.5px),
+    radial-gradient(circle at 5% 85%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    radial-gradient(circle at 2% 60%, var(--border-color, #B19EEF) 0%, transparent 1.5px),
+    radial-gradient(circle at 2% 40%, var(--border-color, #B19EEF) 0%, transparent 2px),
+    linear-gradient(to bottom, var(--border-color, #B19EEF), var(--border-color, #B19EEF));
+  background-size: 100% 100%;
+  box-shadow: 
+    0 0 20px -5px var(--border-color, #B19EEF),
+    inset 0 0 20px -10px var(--border-color, #B19EEF);
 }
 
 .inner-content {
   position: relative;
   border-radius: 18px;
   background: hsl(var(--background));
-  z-index: 1;
-}
-
-@keyframes star-rotate {
-  0% {
-    --rotate-angle: 0deg;
-    transform: rotate(0deg);
-  }
-  100% {
-    --rotate-angle: 360deg;
-    transform: rotate(360deg);
-  }
 }
