@@ -119,13 +119,15 @@ Added GridScan WebGL-based 3D grid animation to hero section background:
 - Provides immersive, futuristic background for hero section while maintaining content readability
 
 ### StarBorder Animation (Features Section)
-Added StarBorder rotating gradient border animation to "Why Choose Zinobot" feature cards:
-- **Component**: Custom React component (`StarBorder.tsx`) with CSS-based rotating gradients
-- **Animation**: Two radial gradient layers rotating in opposite directions (forward and reverse)
-- **Visual**: Purple (#B19EEF) glowing gradient spots that continuously rotate around card borders
+Added StarBorder rotating border animation to "Why Choose Zinobot" feature cards:
+- **Component**: Custom React component (`StarBorder.tsx`) with rotating conic-gradient technique
+- **Implementation**: Uses CSS conic-gradient with mask composite to create crisp rotating border
+- **Animation**: Continuous 360-degree rotation creating a sweeping border effect
+- **Visual**: Purple (#B19EEF) segments rotate around card borders with transparent sections for dynamic effect
 - **Applied to**: All 4 feature cards (AI-Powered Trading Bot, Real-Time Market Signals, Secure & Non-Custodial, Easy to Use)
-- **Configuration**: 6-second rotation speed, 2px thickness, 2.5x gradient scale
-- **Effect**: Creates dynamic "star" or "glowing point" effect moving along borders, adding visual interest to feature cards
+- **Configuration**: 6-second rotation speed, 2px thickness, configurable via CSS variables (--border-color, --animation-speed, --border-thickness)
+- **Effect**: Creates clear, visible rotating outline on card edges - crisp and defined, not diffuse or subtle
+- **Technical**: Uses ::before pseudo-element with conic-gradient background and CSS mask to show only the border portion
 
 ### ElectricBorder Animation (About Section)
 Added ElectricBorder animated border effect to About Zinochain cards:
