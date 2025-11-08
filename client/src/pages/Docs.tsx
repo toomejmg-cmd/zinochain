@@ -12,6 +12,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
   BookOpen,
@@ -345,13 +346,13 @@ export default function Docs() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
 
       <SidebarProvider style={style as React.CSSProperties}>
-        <div className="flex h-screen w-full pt-16">
+        <div className="flex flex-1 w-full">
           <Sidebar>
-            <SidebarContent className="pt-8">
+            <SidebarContent>
               <SidebarGroup>
                 <SidebarGroupContent>
                   <SidebarMenu>
@@ -373,7 +374,12 @@ export default function Docs() {
             </SidebarContent>
           </Sidebar>
 
-          <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 flex flex-col">
+            <header className="flex items-center h-14 px-4 border-b lg:hidden">
+              <SidebarTrigger data-testid="button-sidebar-toggle" />
+              <h2 className="ml-4 text-lg font-semibold">Documentation</h2>
+            </header>
+
             <main className="flex-1 overflow-y-auto">
               <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <motion.div
