@@ -48,7 +48,7 @@ export default function Referral() {
               className="text-4xl md:text-6xl font-bold mb-6"
               data-testid="text-referral-title"
             >
-              Referral <span className="gradient-text">Program</span>
+              Zinochain Bot <span className="gradient-text">Referral Program</span>
             </motion.h1>
 
             <motion.p
@@ -56,7 +56,7 @@ export default function Referral() {
               className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"
               data-testid="text-referral-subtitle"
             >
-              Invite your friends to Zinobot and earn SOL or Zino points for every
+              Invite your friends to Zinochain Bot and earn rewards for every
               successful referral. The more friends you bring, the more you earn!
             </motion.p>
           </motion.div>
@@ -84,21 +84,21 @@ export default function Referral() {
                   icon: Share2,
                   title: "Share Your Link",
                   description:
-                    "Get your unique referral link from Zinobot and share it with friends via social media, messaging apps, or email.",
+                    "Get your unique referral link from Zinochain Bot and share it with friends via social media, messaging apps, or email.",
                 },
                 {
                   step: "2",
                   icon: UserPlus,
                   title: "Friend Joins",
                   description:
-                    "Your friend clicks your link, launches Zinobot on Telegram, and starts trading on the Solana network.",
+                    "Your friend clicks your link, launches Zinochain Bot on Telegram, and starts trading across Solana, Ethereum, and BSC.",
                 },
                 {
                   step: "3",
                   icon: Coins,
                   title: "Earn Rewards",
                   description:
-                    "You earn SOL or Zino points when your friend completes their first trade and continues trading on the platform.",
+                    "You earn rewards when your friend completes their first trade and continues trading across all supported chains.",
                 },
               ].map((step, index) => (
                 <motion.div key={index} variants={fadeInUp} className="relative z-10">
@@ -143,23 +143,23 @@ export default function Referral() {
               {[
                 {
                   icon: Coins,
-                  title: "SOL Rewards",
-                  description: "Earn SOL for each successful referral",
+                  title: "Trading Rewards",
+                  description: "Earn rewards for each successful referral across all chains",
                 },
                 {
                   icon: Gift,
                   title: "Bonus Points",
-                  description: "Accumulate Zino points for exclusive perks",
+                  description: "Accumulate points for exclusive perks and benefits",
                 },
                 {
                   icon: TrendingUp,
                   title: "Lifetime Earnings",
-                  description: "Earn from your referrals' trading activity",
+                  description: "Earn from your referrals' multi-chain trading activity",
                 },
                 {
                   icon: Trophy,
                   title: "Top Referrer Bonuses",
-                  description: "Monthly rewards for top performers",
+                  description: "Monthly rewards for top performers across all chains",
                 },
               ].map((benefit, index) => (
                 <motion.div key={index} variants={fadeInUp}>
@@ -233,8 +233,8 @@ export default function Referral() {
               className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
               data-testid="text-cta-description"
             >
-              Launch Zinobot on Telegram to get your unique referral link and start
-              earning rewards today.
+              Launch Zinochain Bot on Telegram to get your unique referral link and start
+              earning rewards today across all supported chains.
             </motion.p>
             <motion.div variants={fadeInUp}>
               <Button
@@ -248,7 +248,7 @@ export default function Referral() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Launch Zinobot <ArrowRight className="ml-2 h-5 w-5" />
+                  Launch Zinochain Bot <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
             </motion.div>

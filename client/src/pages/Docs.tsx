@@ -37,6 +37,7 @@ export default function Docs() {
 
   const sections = [
     { id: "overview", title: "Overview", icon: BookOpen },
+    { id: "multichain", title: "Multi-Chain Support", icon: Wallet },
     { id: "wallet", title: "Connect Wallet", icon: Wallet },
     { id: "moonpay", title: "MoonPay Guide", icon: CreditCard },
     { id: "commands", title: "Bot Commands", icon: Bot },
@@ -45,14 +46,14 @@ export default function Docs() {
 
   const content: Record<string, { title: string; content: JSX.Element }> = {
     overview: {
-      title: "Overview of Zinochain Ecosystem",
+      title: "Overview of Zinochain Bot",
       content: (
         <div className="space-y-6">
           <p className="text-lg text-muted-foreground" data-testid="text-overview-intro">
-            Zinochain is an AI-powered Solana trading ecosystem that combines
-            cutting-edge technology with community-driven meme culture. Our flagship
-            product, Zinobot, is a Telegram bot that provides real-time trading
-            signals and automated trading capabilities on the Solana blockchain.
+            Zinochain Bot is an AI-powered multi-chain trading ecosystem that combines
+            cutting-edge technology with seamless cross-chain capabilities. Our flagship
+            product is a Telegram bot that provides real-time trading signals and automated
+            trading across Solana, Ethereum, and BSC.
           </p>
 
           <Card className="p-6 bg-card/50">
@@ -61,30 +62,29 @@ export default function Docs() {
               <li className="flex items-start gap-2" data-testid="text-feature-ai-signals">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-foreground">AI-Powered Signals:</strong>{" "}
-                  Advanced machine learning algorithms analyze market trends in
-                  real-time
+                  <strong className="text-foreground">Multi-Chain Trading:</strong>{" "}
+                  Trade seamlessly across Solana, Ethereum, and BSC with optimal routing
                 </span>
               </li>
               <li className="flex items-start gap-2" data-testid="text-feature-solana-native">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-foreground">Solana-Native:</strong>{" "}
-                  Lightning-fast transactions with minimal fees
+                  <strong className="text-foreground">AI-Powered Signals:</strong>{" "}
+                  Advanced algorithms analyze market trends across all supported chains
                 </span>
               </li>
               <li className="flex items-start gap-2" data-testid="text-feature-rewards">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-foreground">Rewards System:</strong> Earn
-                  based on trading volume, referrals, and community activity
+                  <strong className="text-foreground">Secure Wallets:</strong> AES-256
+                  encrypted non-custodial wallets for all chains
                 </span>
               </li>
               <li className="flex items-start gap-2" data-testid="text-feature-community">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-foreground">Community-Driven:</strong> Join
-                  a vibrant ecosystem of traders and meme enthusiasts
+                  <strong className="text-foreground">Referral Rewards:</strong> Earn
+                  rewards when your friends trade across all supported chains
                 </span>
               </li>
             </ul>
@@ -92,13 +92,73 @@ export default function Docs() {
         </div>
       ),
     },
+    multichain: {
+      title: "Multi-Chain Support",
+      content: (
+        <div className="space-y-6">
+          <p className="text-lg text-muted-foreground" data-testid="text-multichain-intro">
+            Zinochain Bot supports trading across three major blockchain networks,
+            giving you access to thousands of tokens and the best liquidity across
+            the crypto ecosystem.
+          </p>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-xl font-semibold mb-4" data-testid="text-supported-chains-heading">Supported Chains</h3>
+            <ul className="space-y-4 text-muted-foreground">
+              <li className="flex items-start gap-2" data-testid="text-chain-solana">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <strong className="text-foreground">Solana</strong>
+                  <p className="mt-1">Lightning-fast transactions with minimal fees. Perfect for high-frequency trading and meme tokens.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-chain-ethereum">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <strong className="text-foreground">Ethereum</strong>
+                  <p className="mt-1">Access the largest DeFi ecosystem with the deepest liquidity and most established tokens.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-chain-bsc">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <strong className="text-foreground">Binance Smart Chain (BSC)</strong>
+                  <p className="mt-1">Low-cost transactions with fast confirmation times and a vibrant trading community.</p>
+                </div>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-xl font-semibold mb-4">Switching Between Chains</h3>
+            <p className="text-muted-foreground mb-4">
+              Easily switch between chains using the <code className="px-2 py-1 bg-muted rounded text-sm">/chain</code> command in the bot:
+            </p>
+            <ul className="space-y-2 text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <code className="text-sm">/chain solana</code> - Switch to Solana
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <code className="text-sm">/chain ethereum</code> - Switch to Ethereum
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <code className="text-sm">/chain bsc</code> - Switch to BSC
+              </li>
+            </ul>
+          </Card>
+        </div>
+      ),
+    },
     wallet: {
-      title: "How to Connect Your Solana Wallet",
+      title: "How to Connect Your Multi-Chain Wallet",
       content: (
         <div className="space-y-6">
           <p className="text-lg text-muted-foreground" data-testid="text-wallet-intro">
-            Connecting your Solana wallet to Zinobot is quick and secure. Follow
-            these steps to get started:
+            Connecting your multi-chain wallet to Zinochain Bot is quick and secure. The bot
+            creates AES-256 encrypted wallets for you across all supported chains.
           </p>
 
           <div className="space-y-4">
@@ -108,7 +168,7 @@ export default function Docs() {
                   <span className="text-primary font-semibold">1</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-1-title">Launch Zinobot</h3>
+                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-1-title">Launch Zinochain Bot</h3>
                   <p className="text-muted-foreground" data-testid="text-wallet-step-1-description">
                     Open{" "}
                     <a
@@ -118,7 +178,7 @@ export default function Docs() {
                       className="text-primary hover:underline"
                       data-testid="link-wallet-telegram"
                     >
-                      Zinobot on Telegram
+                      Zinochain Bot on Telegram
                     </a>{" "}
                     and start a conversation with the bot.
                   </p>
@@ -132,10 +192,10 @@ export default function Docs() {
                   <span className="text-primary font-semibold">2</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-2-title">Use the /connect Command</h3>
+                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-2-title">Create Your Wallet</h3>
                   <p className="text-muted-foreground mb-3" data-testid="text-wallet-step-2-description">
-                    Type <code className="px-2 py-1 bg-muted rounded text-sm">/connect</code>{" "}
-                    to initiate the wallet connection process.
+                    Type <code className="px-2 py-1 bg-muted rounded text-sm">/start</code>{" "}
+                    and the bot will automatically create secure, encrypted wallets for Solana, Ethereum, and BSC.
                   </p>
                 </div>
               </div>
@@ -147,10 +207,10 @@ export default function Docs() {
                   <span className="text-primary font-semibold">3</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-3-title">Choose Your Wallet</h3>
+                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-3-title">Backup Your Keys</h3>
                   <p className="text-muted-foreground" data-testid="text-wallet-step-3-description">
-                    Select your preferred Solana wallet (Phantom, Solflare, etc.) and
-                    follow the prompts to authorize the connection.
+                    Save your private keys securely. The bot will provide encrypted backups for each chain.
+                    Never share your private keys with anyone.
                   </p>
                 </div>
               </div>
@@ -162,10 +222,10 @@ export default function Docs() {
                   <span className="text-primary font-semibold">4</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-4-title">Confirm Connection</h3>
+                  <h3 className="font-semibold mb-2" data-testid="text-wallet-step-4-title">Start Trading</h3>
                   <p className="text-muted-foreground" data-testid="text-wallet-step-4-description">
-                    Once connected, you'll receive a confirmation message and can start
-                    trading immediately.
+                    Once your wallets are created, you can start trading immediately across Solana, Ethereum, and BSC.
+                    Use <code className="px-2 py-1 bg-muted rounded text-sm">/balance</code> to view your holdings.
                   </p>
                 </div>
               </div>
