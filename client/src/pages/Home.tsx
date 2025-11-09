@@ -101,7 +101,7 @@ export default function Home() {
             className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
             data-testid="text-hero-title"
           >
-            <span className="gradient-text">Zinochain</span>
+            <span className="gradient-text">Welcome to Zinochain Bot</span>
           </motion.h1>
 
           <motion.h2
@@ -109,7 +109,7 @@ export default function Home() {
             className="text-2xl md:text-4xl font-semibold mb-4 text-foreground"
             data-testid="text-hero-subtitle"
           >
-            AI-Powered Solana Trading
+            Your AI-Powered Multi-Chain Trading Companion
           </motion.h2>
 
           <motion.p
@@ -117,8 +117,7 @@ export default function Home() {
             className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12"
             data-testid="text-hero-description"
           >
-            Meet Zinobot, the meme-fueled Solana trader powered by AI and community
-            hype.
+            Trade seamlessly across Solana, Ethereum, and BSC with AI-powered insights, secure multi-chain wallets, and automated trading strategies—all from your Telegram.
           </motion.p>
 
           <motion.div
@@ -189,17 +188,16 @@ export default function Home() {
               className="text-3xl md:text-5xl font-bold mb-6"
               data-testid="text-about-title"
             >
-              About <span className="gradient-text">Zinochain</span>
+              About <span className="gradient-text">Zinochain Bot</span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
               className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"
               data-testid="text-about-description"
             >
-              Zinochain is an AI-powered Solana trading ecosystem designed for the
-              next generation of crypto traders. Zinobot trades exclusively on the
-              Solana network, combining cutting-edge AI signals with community-driven
-              meme culture.
+              Zinochain Bot is an AI-powered multi-chain trading ecosystem designed for the
+              next generation of crypto traders. Trade seamlessly across Solana, Ethereum, and BSC
+              with cutting-edge AI signals and secure non-custodial wallets.
             </motion.p>
           </motion.div>
 
@@ -213,21 +211,21 @@ export default function Home() {
             {[
               {
                 icon: Brain,
-                title: "AI-Powered Signals",
+                title: "Multi-Chain Token Swaps",
                 description:
-                  "Advanced machine learning algorithms analyze market trends and provide real-time trading signals for optimal entry and exit points.",
+                  "Swap tokens seamlessly across Solana, Ethereum, and BSC with optimal routing. Get the best prices without leaving Telegram.",
               },
               {
                 icon: Users,
-                title: "Meme-Driven Community",
+                title: "Cross-Chain Portfolio Tracking",
                 description:
-                  "Join a vibrant community of traders who combine serious trading with meme culture. Make profits while having fun.",
+                  "Monitor your holdings across all chains in one place. View balances, track performance, and manage your multi-chain portfolio effortlessly.",
               },
               {
                 icon: Zap,
-                title: "Built for Solana",
+                title: "P2P Transfers on All Chains",
                 description:
-                  "Lightning-fast transactions and minimal fees on the Solana blockchain. Trade at the speed of light.",
+                  "Send and receive crypto instantly on Solana, Ethereum, and BSC. Enjoy lightning-fast P2P transfers with AES-256 encrypted wallets.",
               },
             ].map((feature, index) => (
               <motion.div key={index} variants={fadeInUp}>
@@ -288,10 +286,10 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-6" data-testid="text-features-title">
-              Why Choose <span className="gradient-text">Zinobot</span>
+              Why Choose <span className="gradient-text">Zinochain Bot</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="text-features-description">
-              Discover the powerful features that make Zinobot your ultimate trading companion
+              Discover the powerful features that make Zinochain Bot your ultimate multi-chain trading companion
             </p>
           </div>
 
@@ -310,10 +308,10 @@ export default function Home() {
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="card-stack-ai-title">
-                    AI-Powered Trading Bot
+                    AI-Powered Multi-Chain Trading
                   </h3>
                   <p className="text-lg text-muted-foreground" data-testid="card-stack-ai-description">
-                    Zinobot uses advanced AI algorithms to analyze market trends, identify profitable opportunities, and execute trades 24/7. Get real-time signals and never miss a trade again.
+                    Zinochain Bot uses advanced AI algorithms to analyze market trends across Solana, Ethereum, and BSC. Execute trades 24/7 with optimal routing and never miss an opportunity.
                   </p>
                 </div>
               </div>
@@ -333,10 +331,10 @@ export default function Home() {
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="card-stack-signals-title">
-                    Real-Time Market Signals
+                    Cross-Chain Market Signals
                   </h3>
                   <p className="text-lg text-muted-foreground" data-testid="card-stack-signals-description">
-                    Receive instant alerts on profitable trades, price movements, and market opportunities. Our AI continuously monitors the Solana ecosystem to keep you ahead of the curve.
+                    Receive instant alerts on profitable trades, price movements, and opportunities across all supported chains. Our AI continuously monitors Solana, Ethereum, and BSC ecosystems to keep you ahead of the curve.
                   </p>
                 </div>
               </div>
@@ -359,7 +357,7 @@ export default function Home() {
                     Secure & Non-Custodial
                   </h3>
                   <p className="text-lg text-muted-foreground" data-testid="card-stack-security-description">
-                    Your funds stay in your wallet. Zinobot never has access to your private keys. Trade with confidence knowing your assets are always under your control.
+                    Your funds stay in your multi-chain wallet with AES-256 encryption. Zinochain Bot never has access to your private keys. Trade with confidence across all chains knowing your assets are always under your control.
                   </p>
                 </div>
               </div>
@@ -382,7 +380,7 @@ export default function Home() {
                     Easy to Use
                   </h3>
                   <p className="text-lg text-muted-foreground" data-testid="card-stack-easy-description">
-                    Start trading in seconds with simple commands. No complex interfaces or confusing dashboards - just chat with Zinobot on Telegram and let the AI do the heavy lifting.
+                    Start trading in seconds with simple commands. No complex interfaces or confusing dashboards - just chat with Zinochain Bot on Telegram and let the AI handle multi-chain trading for you.
                   </p>
                 </div>
               </div>
@@ -532,8 +530,8 @@ export default function Home() {
               className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
               data-testid="text-referral-teaser-description"
             >
-              Share your referral link and earn SOL rewards when your friends start
-              trading with Zinobot.
+              Share your referral link and earn rewards when your friends start
+              trading with Zinochain Bot across all supported chains.
             </motion.p>
 
             <motion.div variants={fadeInUp}>
@@ -588,23 +586,23 @@ export default function Home() {
                 {
                   step: "01",
                   icon: Bot,
-                  title: "Start Zinobot on Telegram",
+                  title: "Start Zinochain Bot on Telegram",
                   description:
-                    "Open @zinochainbot on Telegram to access the AI-powered Solana trading platform.",
+                    "Open @zinochainbot on Telegram to access the AI-powered multi-chain trading platform.",
                 },
                 {
                   step: "02",
                   icon: Rocket,
-                  title: "Connect Your Wallet",
+                  title: "Connect Your Multi-Chain Wallet",
                   description:
-                    "Link your Solana wallet directly through the Telegram bot to start trading.",
+                    "Link your multi-chain wallet directly through the Telegram bot to start trading on Solana, Ethereum, and BSC.",
                 },
                 {
                   step: "03",
                   icon: TrendingUp,
-                  title: "Trade with AI Signals",
+                  title: "Trade Across All Chains",
                   description:
-                    "Execute trades with AI-powered insights and earn rewards based on your activity.",
+                    "Execute trades on Solana, Ethereum, and BSC with AI-powered insights and earn rewards based on your activity.",
                 },
               ].map((step, index) => (
                 <motion.div
