@@ -76,7 +76,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Launch Zinobot
+                Launch Bot
               </a>
             </Button>
           </div>
@@ -126,7 +126,7 @@ export function Navbar() {
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Launch Zinobot
+                  Launch Bot
                 </a>
               </Button>
             </div>

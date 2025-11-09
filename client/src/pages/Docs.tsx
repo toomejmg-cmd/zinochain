@@ -304,27 +304,27 @@ export default function Docs() {
       ),
     },
     commands: {
-      title: "Zinobot Commands",
+      title: "Bot Commands",
       content: (
         <div className="space-y-6">
           <p className="text-lg text-muted-foreground" data-testid="text-commands-intro">
-            Zinobot supports various commands to help you trade, manage your account,
-            and access features. Here are the essential commands:
+            Zinochain Bot supports various commands to help you trade, manage your account,
+            and access features across all supported chains. Here are the essential commands:
           </p>
 
           <div className="space-y-3">
             {[
               {
                 cmd: "/start",
-                desc: "Initialize the bot and see the welcome message",
+                desc: "Initialize the bot and create your multi-chain wallets",
               },
               {
-                cmd: "/connect",
-                desc: "Connect your Solana wallet to Zinobot",
+                cmd: "/chain",
+                desc: "Switch between Solana, Ethereum, and BSC networks",
               },
               {
                 cmd: "/balance",
-                desc: "Check your SOL balance and Zino points",
+                desc: "Check your balances across all chains",
               },
               {
                 cmd: "/trade",
@@ -452,7 +452,7 @@ export default function Docs() {
                     <span className="gradient-text">Documentation</span>
                   </h1>
                   <p className="text-lg text-muted-foreground" data-testid="text-docs-subtitle">
-                    Everything you need to know about using Zinochain and Zinobot
+                    Everything you need to know about using Zinochain Bot
                   </p>
                 </motion.div>
 
