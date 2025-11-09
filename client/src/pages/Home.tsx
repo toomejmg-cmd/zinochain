@@ -293,21 +293,17 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto space-y-8">
-            <StarBorder
-              as="div"
-              color="#B19EEF"
-              speed="6s"
-              thickness={2}
-              className="rounded-lg"
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div 
+              className="lg:row-span-3 rounded-lg border-2 border-[#a8e063] bg-card/50 backdrop-blur-sm shadow-[0_0_15px_rgba(168,224,99,0.3)]"
               data-testid="card-stack-ai"
             >
-              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
+              <div className="flex flex-col items-center gap-8 p-12 h-full justify-center">
                 <div className="p-8 bg-primary/10 rounded-2xl border border-primary/30">
-                  <Bot className="h-16 w-16 text-primary" />
+                  <Bot className="h-20 w-20 text-primary" />
                 </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="card-stack-ai-title">
+                <div className="text-center">
+                  <h3 className="text-4xl font-bold mb-4 gradient-text" data-testid="card-stack-ai-title">
                     AI-Powered Multi-Chain Trading
                   </h3>
                   <p className="text-lg text-muted-foreground" data-testid="card-stack-ai-description">
@@ -315,76 +311,64 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </StarBorder>
+            </div>
 
-            <StarBorder
-              as="div"
-              color="#B19EEF"
-              speed="6s"
-              thickness={2}
-              className="rounded-lg"
+            <div 
+              className="rounded-lg border-2 border-[#a8e063] bg-card/50 backdrop-blur-sm shadow-[0_0_15px_rgba(168,224,99,0.3)]"
               data-testid="card-stack-signals"
             >
-              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
-                <div className="p-8 bg-chart-2/10 rounded-2xl border border-chart-2/30">
-                  <LineChart className="h-16 w-16 text-chart-2" />
+              <div className="flex flex-col md:flex-row items-center gap-6 p-8">
+                <div className="p-6 bg-chart-2/10 rounded-2xl border border-chart-2/30 flex-shrink-0">
+                  <LineChart className="h-12 w-12 text-chart-2" />
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="card-stack-signals-title">
+                  <h3 className="text-2xl font-bold mb-3 gradient-text" data-testid="card-stack-signals-title">
                     Cross-Chain Market Signals
                   </h3>
-                  <p className="text-lg text-muted-foreground" data-testid="card-stack-signals-description">
-                    Receive instant alerts on profitable trades, price movements, and opportunities across all supported chains. Our AI continuously monitors Solana, Ethereum, and BSC ecosystems to keep you ahead of the curve.
+                  <p className="text-base text-muted-foreground" data-testid="card-stack-signals-description">
+                    Receive instant alerts on profitable trades, price movements, and opportunities across all supported chains.
                   </p>
                 </div>
               </div>
-            </StarBorder>
+            </div>
 
-            <StarBorder
-              as="div"
-              color="#B19EEF"
-              speed="6s"
-              thickness={2}
-              className="rounded-lg"
+            <div 
+              className="rounded-lg border-2 border-[#a8e063] bg-card/50 backdrop-blur-sm shadow-[0_0_15px_rgba(168,224,99,0.3)]"
               data-testid="card-stack-security"
             >
-              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
-                <div className="p-8 bg-chart-3/10 rounded-2xl border border-chart-3/30">
-                  <Shield className="h-16 w-16 text-chart-3" />
+              <div className="flex flex-col md:flex-row items-center gap-6 p-8">
+                <div className="p-6 bg-chart-3/10 rounded-2xl border border-chart-3/30 flex-shrink-0">
+                  <Shield className="h-12 w-12 text-chart-3" />
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="card-stack-security-title">
+                  <h3 className="text-2xl font-bold mb-3 gradient-text" data-testid="card-stack-security-title">
                     Secure & Non-Custodial
                   </h3>
-                  <p className="text-lg text-muted-foreground" data-testid="card-stack-security-description">
-                    Your funds stay in your multi-chain wallet with AES-256 encryption. Zinochain Bot never has access to your private keys. Trade with confidence across all chains knowing your assets are always under your control.
+                  <p className="text-base text-muted-foreground" data-testid="card-stack-security-description">
+                    Your funds stay in your multi-chain wallet with AES-256 encryption. Trade with confidence across all chains.
                   </p>
                 </div>
               </div>
-            </StarBorder>
+            </div>
 
-            <StarBorder
-              as="div"
-              color="#B19EEF"
-              speed="6s"
-              thickness={2}
-              className="rounded-lg"
+            <div 
+              className="rounded-lg border-2 border-[#a8e063] bg-card/50 backdrop-blur-sm shadow-[0_0_15px_rgba(168,224,99,0.3)]"
               data-testid="card-stack-easy"
             >
-              <div className="flex flex-col md:flex-row items-center gap-8 p-12">
-                <div className="p-8 bg-chart-4/10 rounded-2xl border border-chart-4/30">
-                  <Sparkles className="h-16 w-16 text-chart-4" />
+              <div className="flex flex-col md:flex-row items-center gap-6 p-8">
+                <div className="p-6 bg-chart-4/10 rounded-2xl border border-chart-4/30 flex-shrink-0">
+                  <Sparkles className="h-12 w-12 text-chart-4" />
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-3xl font-bold mb-4 gradient-text" data-testid="card-stack-easy-title">
+                  <h3 className="text-2xl font-bold mb-3 gradient-text" data-testid="card-stack-easy-title">
                     Easy to Use
                   </h3>
-                  <p className="text-lg text-muted-foreground" data-testid="card-stack-easy-description">
-                    Start trading in seconds with simple commands. No complex interfaces or confusing dashboards - just chat with Zinochain Bot on Telegram and let the AI handle multi-chain trading for you.
+                  <p className="text-base text-muted-foreground" data-testid="card-stack-easy-description">
+                    Start trading in seconds with simple commands. Just chat with Zinochain Bot on Telegram.
                   </p>
                 </div>
               </div>
-            </StarBorder>
+            </div>
           </div>
         </div>
       </section>
