@@ -1,7 +1,15 @@
-# Zinochain - Telegram-Based Solana Trading Ecosystem
+# Zinochain - Telegram-Based Multi-Chain Trading Ecosystem
 
 ## Overview
-Zinochain is a full-stack web application featuring a Telegram bot called Zinobot for AI-powered Solana trading. The project includes a marketing website with engaging animations and an admin dashboard for monitoring. All trading happens exclusively through the Telegram bot. The website prioritizes visual appeal with a dark theme, neon gradients, and meme culture aesthetics, featuring Home, Referral, and Documentation pages.
+Zinochain is a full-stack web application featuring a Telegram bot called Zinochain Bot for AI-powered multi-chain trading. The bot supports trading across Solana, Ethereum, and BSC blockchains. The project includes a marketing website with engaging animations and an admin dashboard for monitoring. All trading happens exclusively through the Telegram bot (@zinochainbot). The website prioritizes visual appeal with a dark theme, neon gradients, and modern aesthetics, featuring Home, Referral, and Documentation pages.
+
+## Recent Changes (November 2025)
+- **Multi-Chain Rebranding**: Rebranded from "Zinobot" (Solana-only) to "Zinochain Bot" (multi-chain)
+- **Supported Blockchains**: Now explicitly supports Solana, Ethereum, and Binance Smart Chain (BSC)
+- **Updated Features**: Multi-chain token swaps, cross-chain portfolio tracking, P2P transfers on all chains
+- **Documentation Updates**: Added Multi-Chain Support section, updated wallet connection guide
+- **Chain Switching**: Added /chain command for switching between networks
+- **Removed References**: Eliminated mentions of "Jupiter" and "1inch" aggregators from user-facing content
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -30,17 +38,19 @@ Preferred communication style: Simple, everyday language.
 - **Abstraction**: `IStorage` interface with `DbStorage` implementation using Drizzle ORM.
 
 ### Key Features
-- **Trading**: All trading happens through the Telegram bot (@zinochainbot)
+- **Multi-Chain Trading**: Trade seamlessly across Solana, Ethereum, and BSC through the Telegram bot (@zinochainbot)
+- **Cross-Chain Wallets**: AES-256 encrypted non-custodial wallets for all supported chains
+- **Chain Switching**: Use /chain command to switch between Solana, Ethereum, and BSC networks
 - **Admin Dashboard**: Monitor trades, manage token claims, view stats (Replit Auth protected)
-- **Live Token Prices**: DexScreener API integration for real-time Raydium token data
+- **Live Token Prices**: DexScreener API integration for real-time token data across chains
 - **Branding**: Official Zinochain gradient logo integrated throughout the site with animations
 
 ## External Dependencies
 
 ### Third-Party Services
-- **Telegram**: Primary interface for Zinobot trading bot
+- **Telegram**: Primary interface for Zinochain Bot trading bot
 - **Neon Database**: Serverless PostgreSQL hosting
-- **DexScreener API**: Real-time token price data
+- **DexScreener API**: Real-time token price data across Solana, Ethereum, and BSC
 - **Replit Auth**: OAuth authentication service for admin dashboard
 
 ### UI & Animation Libraries
