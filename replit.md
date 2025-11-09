@@ -10,6 +10,8 @@ Zinochain is a full-stack web application featuring a Telegram bot called Zinoch
 - **Documentation Updates**: Added Multi-Chain Support section, updated wallet connection guide
 - **Chain Switching**: Added /chain command for switching between networks
 - **Removed References**: Eliminated mentions of "Jupiter" and "1inch" aggregators from user-facing content
+- **Features Section Design**: Implemented 2-column grid layout with prominent AI-Powered card and lemon green (#a8e063) glowing borders
+- **Automated Rewards System**: Backend service automatically updates rewards total every 6 hours with random amounts ($10-$7312), starting at $471,552
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -34,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **Database**: PostgreSQL (via Neon serverless driver).
 - **ORM**: Drizzle ORM for type-safe operations, Drizzle Kit for migrations.
-- **Schema**: `users`, `sessions`, `tokens`, `trades`, `tokenClaims`, `investments`, `referrals`, `communityStats`, `analyticsEvents`.
+- **Schema**: `users`, `sessions`, `tokens`, `trades`, `tokenClaims`, `investments`, `referrals`, `communityStats`, `analyticsEvents`, `automatedRewards`.
 - **Abstraction**: `IStorage` interface with `DbStorage` implementation using Drizzle ORM.
 
 ### Key Features
@@ -43,6 +45,7 @@ Preferred communication style: Simple, everyday language.
 - **Chain Switching**: Use /chain command to switch between Solana, Ethereum, and BSC networks
 - **Admin Dashboard**: Monitor trades, manage token claims, view stats (Replit Auth protected)
 - **Live Token Prices**: DexScreener API integration for real-time token data across chains
+- **Automated Rewards**: Backend service updates rewards total every 6 hours (+$10-$7312 random increments), starting at $471,552
 - **Branding**: Official Zinochain gradient logo integrated throughout the site with animations
 
 ## External Dependencies

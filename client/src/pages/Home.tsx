@@ -9,6 +9,7 @@ import { GridScan } from "@/components/GridScan";
 import { BubbleAnimation } from "@/components/BubbleAnimation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { RewardsCounter } from "@/components/RewardsCounter";
 import {
   Rocket,
   TrendingUp,
@@ -416,24 +417,7 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="mb-12">
-              <MagicCard
-                enableParticles={true}
-                enableTilt={true}
-                enableMagnetism={true}
-                enableClickRipple={true}
-                enableGlow={true}
-                particleCount={15}
-                glowColor="251, 191, 36"
-              >
-                <Card className="p-12 max-w-2xl mx-auto glow-border bg-card/80 backdrop-blur-sm">
-                  <div className="text-6xl md:text-8xl font-bold gradient-text mb-4" data-testid="text-rewards-counter">
-                    $1,234,567
-                  </div>
-                  <p className="text-lg text-muted-foreground" data-testid="text-rewards-distributed">
-                    Total Rewards Distributed
-                  </p>
-                </Card>
-              </MagicCard>
+              <RewardsCounter />
             </motion.div>
 
             <motion.div

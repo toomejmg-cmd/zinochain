@@ -250,6 +250,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(users);
   });
 
+  app.get("/api/rewards", async (req, res) => {
+    try {
+      let rewards = await storage.getAutomatedRewards();
+      if (!rewards) {
+        rewards = await storage.createAutomatedRewards();
+      }
+      res.json(rewards);
+    } catch (error) {
+      console.error("Error fetching automated rewards:", error);
+      res.status(500).json({ error: "Failed to fetch rewards" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

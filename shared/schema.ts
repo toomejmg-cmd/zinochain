@@ -50,6 +50,13 @@ export const communityStats = pgTable("community_stats", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+export const automatedRewards = pgTable("automated_rewards", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  currentTotal: decimal("current_total", { precision: 20, scale: 2 }).notNull().default("471552.00"),
+  lastUpdated: timestamp("last_updated").notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const analyticsEvents = pgTable("analytics_events", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   eventType: text("event_type").notNull(),
@@ -128,6 +135,12 @@ export const insertCommunityStatsSchema = createInsertSchema(communityStats).omi
   updatedAt: true,
 });
 
+export const insertAutomatedRewardsSchema = createInsertSchema(automatedRewards).omit({
+  id: true,
+  createdAt: true,
+  lastUpdated: true,
+});
+
 export const insertAnalyticsEventSchema = createInsertSchema(analyticsEvents).omit({
   id: true,
   createdAt: true,
@@ -171,3 +184,5 @@ export type InsertTokenClaim = z.infer<typeof insertTokenClaimSchema>;
 export type TokenClaim = typeof tokenClaims.$inferSelect;
 export type InsertInvestment = z.infer<typeof insertInvestmentSchema>;
 export type Investment = typeof investments.$inferSelect;
+export type InsertAutomatedRewards = z.infer<typeof insertAutomatedRewardsSchema>;
+export type AutomatedRewards = typeof automatedRewards.$inferSelect;

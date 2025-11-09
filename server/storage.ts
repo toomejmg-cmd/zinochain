@@ -16,6 +16,8 @@ import {
   type InsertTokenClaim,
   type Investment,
   type InsertInvestment,
+  type AutomatedRewards,
+  type InsertAutomatedRewards,
   users,
   referrals,
   communityStats,
@@ -24,6 +26,7 @@ import {
   trades,
   tokenClaims,
   investments,
+  automatedRewards,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql, and, isNull, lt } from "drizzle-orm";
@@ -79,6 +82,11 @@ export interface IStorage {
   // Admin operations
   getTopReferrers(limit: number): Promise<User[]>;
   getAllUsers(): Promise<User[]>;
+  
+  // Automated rewards operations
+  getAutomatedRewards(): Promise<AutomatedRewards | undefined>;
+  createAutomatedRewards(): Promise<AutomatedRewards>;
+  updateAutomatedRewards(amount: string): Promise<AutomatedRewards>;
 }
 
 export class DbStorage implements IStorage {
@@ -277,6 +285,32 @@ export class DbStorage implements IStorage {
 
   async getAllUsers(): Promise<User[]> {
     return await db.select().from(users);
+  }
+
+  // Automated rewards methods
+  async getAutomatedRewards(): Promise<AutomatedRewards | undefined> {
+    const [result] = await db.select().from(automatedRewards).limit(1);
+    return result;
+  }
+
+  async createAutomatedRewards(): Promise<AutomatedRewards> {
+    const [result] = await db.insert(automatedRewards).values({}).returning();
+    return result;
+  }
+
+  async updateAutomatedRewards(amount: string): Promise<AutomatedRewards> {
+    const existing = await this.getAutomatedRewards();
+    if (!existing) {
+      throw new Error('Automated rewards not initialized');
+    }
+    const [result] = await db.update(automatedRewards)
+      .set({ 
+        currentTotal: amount,
+        lastUpdated: new Date()
+      })
+      .where(eq(automatedRewards.id, existing.id))
+      .returning();
+    return result;
   }
 }
 
