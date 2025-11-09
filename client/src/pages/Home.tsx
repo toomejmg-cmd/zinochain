@@ -102,7 +102,7 @@ export default function Home() {
             className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
             data-testid="text-hero-title"
           >
-            <span className="gradient-text">Welcome to Zinochain Bot</span>
+            <span className="gradient-text">Trade with Smarter Trades. Faster Decisions. Zinochain.</span>
           </motion.h1>
 
           <motion.h2
