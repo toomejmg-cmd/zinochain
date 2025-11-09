@@ -99,15 +99,15 @@ export default function Home() {
 
           <motion.h1
             variants={fadeInUp}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-white"
             data-testid="text-hero-title"
           >
-            <span className="gradient-text">Trade with Smarter Trades. Faster Decisions. Zinochain.</span>
+            Smarter Trades. Faster Decisions. Zinochain.
           </motion.h1>
 
           <motion.h2
             variants={fadeInUp}
-            className="text-2xl md:text-4xl font-semibold mb-4 text-foreground"
+            className="text-2xl md:text-4xl font-semibold mb-4 text-sky-400"
             data-testid="text-hero-subtitle"
           >
             Your AI-Powered Multi-Chain Trading Companion

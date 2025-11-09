@@ -12,6 +12,7 @@ Zinochain is a full-stack web application featuring a Telegram bot called Zinoch
 - **Removed References**: Eliminated mentions of "Jupiter" and "1inch" aggregators from user-facing content
 - **Features Section Design**: Implemented 2-column grid layout with prominent AI-Powered card and lemon green (#a8e063) glowing borders
 - **Automated Rewards System**: Backend service automatically updates rewards total every 6 hours with random amounts ($10-$7312), starting at $471,552
+- **Hero Section Update**: Changed headline to "Smarter Trades. Faster Decisions. Zinochain." with white text and sky blue subheader
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
