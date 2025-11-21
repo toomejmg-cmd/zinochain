@@ -66,6 +66,13 @@ async function upsertUser(
 }
 
 export async function setupAuth(app: Express) {
+  // Replit Auth only works on Replit platform (when REPL_ID is available)
+  // On other platforms like Railway, skip auth setup
+  if (!process.env.REPL_ID) {
+    console.log("[Auth] Skipping Replit Auth setup - not running on Replit platform");
+    return;
+  }
+
   app.set("trust proxy", 1);
   app.use(getSession());
   app.use(passport.initialize());
@@ -136,6 +143,11 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
+  // On non-Replit platforms, auth is not available
+  if (!process.env.REPL_ID) {
+    return res.status(401).json({ message: "Admin authentication not available on this platform" });
+  }
+
   const user = req.user as any;
 
   if (!req.isAuthenticated() || !user.expires_at) {
