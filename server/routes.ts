@@ -1,7 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
 import {
   type InsertUser,
   insertUserSchema,
@@ -27,20 +26,6 @@ function calculateTier(referralCount: number): string {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Setup Replit Auth middleware (admin only)
-  await setupAuth(app);
-
-  // Auth routes (Replit Auth only - for admins)
-  app.get("/api/auth/user", isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
 
   // Token price endpoints (proxy to DexScreener API)
   app.get("/api/tokens/prices", async (req, res) => {
@@ -84,9 +69,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard: Get user trades
-  app.get("/api/dashboard/trades", isAuthenticated, async (req: any, res) => {
+  app.get("/api/dashboard/trades", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.query.userId || req.body.userId;
+      if (!userId) {
+        return res.status(400).json({ error: "userId is required" });
+      }
       const trades = await storage.getUserTrades(userId);
       res.json(trades);
     } catch (error) {
@@ -96,11 +84,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard: Create trade
-  app.post("/api/dashboard/trades", isAuthenticated, async (req: any, res) => {
+  app.post("/api/dashboard/trades", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const tradeData = insertTradeSchema.parse({ ...req.body, userId });
-      const trade = await storage.createTrade(tradeData);
+      const { userId, ...tradeData } = req.body;
+      if (!userId) {
+        return res.status(400).json({ error: "userId is required" });
+      }
+      const parsedData = insertTradeSchema.parse({ ...tradeData, userId });
+      const trade = await storage.createTrade(parsedData);
       res.json(trade);
     } catch (error) {
       console.error("Error creating trade:", error);
@@ -109,9 +100,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard: Get unclaimed tokens
-  app.get("/api/dashboard/claims", isAuthenticated, async (req: any, res) => {
+  app.get("/api/dashboard/claims", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.query.userId || req.body.userId;
+      if (!userId) {
+        return res.status(400).json({ error: "userId is required" });
+      }
       const claims = await storage.getUnclaimedTokens(userId);
       res.json(claims);
     } catch (error) {
@@ -121,9 +115,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard: Claim token
-  app.post("/api/dashboard/claims/:id/claim", isAuthenticated, async (req: any, res) => {
+  app.post("/api/dashboard/claims/:id/claim", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.body.userId;
+      if (!userId) {
+        return res.status(400).json({ error: "userId is required" });
+      }
       const claimId = req.params.id;
       
       const existingClaim = await storage.getUserClaims(userId);
@@ -146,9 +143,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard: Get user investments
-  app.get("/api/dashboard/investments", isAuthenticated, async (req: any, res) => {
+  app.get("/api/dashboard/investments", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.query.userId || req.body.userId;
+      if (!userId) {
+        return res.status(400).json({ error: "userId is required" });
+      }
       const investments = await storage.getUserInvestments(userId);
       res.json(investments);
     } catch (error) {
@@ -158,11 +158,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard: Create investment
-  app.post("/api/dashboard/investments", isAuthenticated, async (req: any, res) => {
+  app.post("/api/dashboard/investments", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const investmentData = insertInvestmentSchema.parse({ ...req.body, userId });
-      const investment = await storage.createInvestment(investmentData);
+      const { userId, ...investmentData } = req.body;
+      if (!userId) {
+        return res.status(400).json({ error: "userId is required" });
+      }
+      const parsedData = insertInvestmentSchema.parse({ ...investmentData, userId });
+      const investment = await storage.createInvestment(parsedData);
       res.json(investment);
     } catch (error) {
       console.error("Error creating investment:", error);
@@ -170,16 +173,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Create token
-  app.post("/api/admin/tokens", isAuthenticated, async (req: any, res) => {
+  // Admin: Create token (public - no auth required)
+  app.post("/api/admin/tokens", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ error: "Admin access required" });
-      }
-      
       const tokenData = insertTokenSchema.parse(req.body);
       const token = await storage.createToken(tokenData);
       res.json(token);
@@ -189,18 +185,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Create token claim
-  app.post("/api/admin/claims", isAuthenticated, async (req: any, res) => {
+  // Admin: Create token claim (public - no auth required)
+  app.post("/api/admin/claims", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ error: "Admin access required" });
-      }
-      
-      const claimData = insertTokenClaimSchema.parse({ ...req.body, createdBy: userId });
-      const claim = await storage.createTokenClaim(claimData);
+      const { createdBy, ...claimData } = req.body;
+      const parsedData = insertTokenClaimSchema.parse({ ...claimData, createdBy: createdBy || "system" });
+      const claim = await storage.createTokenClaim(parsedData);
       res.json(claim);
     } catch (error) {
       console.error("Error creating claim:", error);
