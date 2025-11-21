@@ -630,21 +630,16 @@ export default function Docs() {
       <Navbar />
 
       {/* Menu Bar - 3 Lines */}
-      <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <button
-              onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
-              data-testid="button-menu-toggle"
-            >
-              <Menu className="h-5 w-5" />
-              <span>Sections</span>
-            </button>
-            <span className="text-sm text-muted-foreground" data-testid="text-current-section">
-              {sections.find((s) => s.id === activeSection)?.title}
-            </span>
-          </div>
+      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-16 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <button
+            onClick={() => setShowMenu(!showMenu)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-foreground font-medium transition-all border border-primary/30"
+            data-testid="button-menu-toggle"
+          >
+            <Menu className="h-5 w-5" />
+            <span>Documentation Sections</span>
+          </button>
 
           {/* Menu Dropdown */}
           {showMenu && (
@@ -653,7 +648,7 @@ export default function Docs() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="pb-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"
+              className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"
             >
               {sections.map((section) => (
                 <button
