@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -30,6 +30,13 @@ const fadeInUp = {
 export default function Docs() {
   const [activeSection, setActiveSection] = useState("overview");
   const [showMenu, setShowMenu] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo(0, 0);
+    }
+  }, [activeSection]);
 
   const sections = [
     { id: "overview", title: "Overview", icon: BookOpen },
@@ -673,7 +680,7 @@ export default function Docs() {
         </div>
       </div>
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto" ref={mainRef}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
           <motion.div
             initial="hidden"
