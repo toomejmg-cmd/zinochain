@@ -674,7 +674,7 @@ export default function Docs() {
       </div>
 
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
           <motion.div
             initial="hidden"
             animate="visible"
