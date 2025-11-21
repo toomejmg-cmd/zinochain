@@ -3,17 +3,7 @@ import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 import {
   BookOpen,
   Wallet,
@@ -24,6 +14,8 @@ import {
   Zap,
   Lock,
   TrendingUp,
+  ChevronLeft,
+  Menu,
 } from "lucide-react";
 
 const fadeInUp = {
@@ -37,6 +29,7 @@ const fadeInUp = {
 
 export default function Docs() {
   const [activeSection, setActiveSection] = useState("overview");
+  const [showMenu, setShowMenu] = useState(false);
 
   const sections = [
     { id: "overview", title: "Overview", icon: BookOpen },
@@ -48,6 +41,10 @@ export default function Docs() {
     { id: "security", title: "Security", icon: Lock },
     { id: "commands", title: "Bot Commands", icon: Bot },
   ];
+
+  const currentIndex = sections.findIndex((s) => s.id === activeSection);
+  const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
+  const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
 
   const content: Record<string, { title: string; content: JSX.Element }> = {
     overview: {
@@ -628,82 +625,129 @@ export default function Docs() {
     },
   };
 
-  const style = {
-    "--sidebar-width": "16rem",
-    "--sidebar-width-icon": "3rem",
-  };
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
 
-      <SidebarProvider style={style as React.CSSProperties}>
-        <div className="flex flex-1 w-full">
-          <Sidebar className="pt-16 transition-all duration-300 ease-in-out">
-            <SidebarContent>
-              <SidebarGroup>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    {sections.map((section) => (
-                      <SidebarMenuItem key={section.id}>
-                        <SidebarMenuButton
-                          onClick={() => setActiveSection(section.id)}
-                          isActive={activeSection === section.id}
-                          data-testid={`button-section-${section.id}`}
-                        >
-                          <section.icon className="h-4 w-4" />
-                          <span>{section.title}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
-          </Sidebar>
-
-          <div className="flex-1 flex flex-col">
-            <div className="lg:hidden flex items-center h-16 px-4 border-b sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <SidebarTrigger data-testid="button-sidebar-toggle" className="transition-all duration-300" />
-              <h2 className="ml-4 text-lg font-semibold">Documentation</h2>
-            </div>
-
-            <main className="flex-1 overflow-y-auto">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeInUp}
-                  className="mb-12"
-                >
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-docs-title">
-                    <span className="gradient-text">Documentation</span>
-                  </h1>
-                  <p className="text-lg text-muted-foreground" data-testid="text-docs-subtitle">
-                    Everything you need to know about using Zinochain Bot
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  key={activeSection}
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeInUp}
-                >
-                  <Card className="p-8 bg-card/50 backdrop-blur-sm" data-testid={`content-${activeSection}`}>
-                    <h2 className="text-3xl font-bold mb-6" data-testid={`text-section-title-${activeSection}`}>
-                      {content[activeSection].title}
-                    </h2>
-                    {content[activeSection].content}
-                  </Card>
-                </motion.div>
-              </div>
-            </main>
-
-            <Footer />
+      {/* Menu Bar - 3 Lines */}
+      <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+              data-testid="button-menu-toggle"
+            >
+              <Menu className="h-5 w-5" />
+              <span>Sections</span>
+            </button>
+            <span className="text-sm text-muted-foreground" data-testid="text-current-section">
+              {sections.find((s) => s.id === activeSection)?.title}
+            </span>
           </div>
+
+          {/* Menu Dropdown */}
+          {showMenu && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="pb-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"
+            >
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => {
+                    setActiveSection(section.id);
+                    setShowMenu(false);
+                  }}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-all ${
+                    activeSection === section.id
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  }`}
+                  data-testid={`button-section-${section.id}`}
+                >
+                  <section.icon className="h-4 w-4" />
+                  <span className="truncate">{section.title}</span>
+                </button>
+              ))}
+            </motion.div>
+          )}
         </div>
-      </SidebarProvider>
+      </div>
+
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            className="mb-12"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-docs-title">
+              <span className="gradient-text">Documentation</span>
+            </h1>
+            <p className="text-lg text-muted-foreground" data-testid="text-docs-subtitle">
+              Everything you need to know about using Zinochain Bot
+            </p>
+          </motion.div>
+
+          <motion.div
+            key={activeSection}
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+          >
+            <Card className="p-8 bg-card/50 backdrop-blur-sm mb-12" data-testid={`content-${activeSection}`}>
+              <h2 className="text-3xl font-bold mb-6" data-testid={`text-section-title-${activeSection}`}>
+                {content[activeSection].title}
+              </h2>
+              {content[activeSection].content}
+            </Card>
+
+            {/* Navigation Buttons */}
+            <div className="flex items-center justify-between gap-4 mt-12">
+              {prevSection ? (
+                <Button
+                  onClick={() => setActiveSection(prevSection.id)}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                  data-testid="button-nav-prev"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  <div className="text-left">
+                    <div className="text-xs text-muted-foreground">Previous</div>
+                    <div className="text-sm font-medium">{prevSection.title}</div>
+                  </div>
+                </Button>
+              ) : (
+                <div />
+              )}
+
+              {nextSection ? (
+                <Button
+                  onClick={() => setActiveSection(nextSection.id)}
+                  variant="outline"
+                  className="flex items-center gap-2 ml-auto"
+                  data-testid="button-nav-next"
+                >
+                  <div className="text-right">
+                    <div className="text-xs text-muted-foreground">Next</div>
+                    <div className="text-sm font-medium">{nextSection.title}</div>
+                  </div>
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <div />
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }
