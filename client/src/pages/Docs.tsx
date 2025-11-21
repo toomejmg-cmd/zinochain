@@ -639,7 +639,7 @@ export default function Docs() {
 
       <SidebarProvider style={style as React.CSSProperties}>
         <div className="flex flex-1 w-full overflow-hidden">
-          <Sidebar className="pt-16 hidden lg:flex">
+          <Sidebar className="pt-0 hidden lg:flex lg:pt-16 z-[60] lg:z-auto">
             <SidebarContent>
               <SidebarGroup>
                 <SidebarGroupContent>
