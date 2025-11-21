@@ -57,15 +57,6 @@ export default function Home() {
         id="hero"
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
       >
-        {/* Faint background image */}
-        <div className="absolute inset-0 opacity-40">
-          <img 
-            src={heroBg} 
-            alt="Hero background" 
-            className="w-full h-full object-contain"
-          />
-        </div>
-
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-chart-2/20" />
         <div className="absolute inset-0">
           <GridScan
@@ -474,6 +465,52 @@ export default function Home() {
                   </Card>
                 </MagicCard>
               ))}
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section id="bot-showcase" className="relative py-20 md:py-32 bg-background overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <PixelBlast
+            variant="square"
+            pixelSize={8}
+            color="#60A5FA"
+            patternScale={2}
+            patternDensity={0.6}
+            pixelSizeJitter={0.3}
+            enableRipples={false}
+            speed={0.2}
+            edgeFade={0.4}
+            transparent
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="flex flex-col items-center justify-center"
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-5xl font-bold mb-12 text-center"
+              data-testid="text-bot-showcase-title"
+            >
+              Meet <span className="gradient-text">Zinochain Bot</span>
+            </motion.h2>
+            
+            <motion.div
+              variants={fadeInUp}
+              className="flex justify-center"
+            >
+              <img 
+                src={heroBg} 
+                alt="Zinochain Bot Interface" 
+                className="max-w-sm w-full rounded-lg shadow-2xl hover-elevate transition-all"
+                data-testid="img-bot-interface"
+              />
             </motion.div>
           </motion.div>
         </div>
