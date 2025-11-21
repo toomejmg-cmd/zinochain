@@ -56,8 +56,8 @@ export default function Referral() {
               className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"
               data-testid="text-referral-subtitle"
             >
-              Invite your friends to Zinochain Bot and earn rewards for every
-              successful referral. The more friends you bring, the more you earn!
+              Trade. Refer. Earn More. Earn 50% cashback on your referred users' trading fees
+              and up to 55% commissions across a 3-layer referral system.
             </motion.p>
           </motion.div>
 
@@ -143,23 +143,23 @@ export default function Referral() {
               {[
                 {
                   icon: Coins,
-                  title: "Trading Rewards",
-                  description: "Earn rewards for each successful referral across all chains",
+                  title: "50% Cashback",
+                  description: "Earn 50% cashback on your referred users' trading fees",
                 },
                 {
                   icon: Gift,
-                  title: "Bonus Points",
-                  description: "Accumulate points for exclusive perks and benefits",
+                  title: "25% Base Cashback",
+                  description: "Receive 25% cashback on all your own trading fees",
                 },
                 {
                   icon: TrendingUp,
-                  title: "Lifetime Earnings",
-                  description: "Earn from your referrals' multi-chain trading activity",
+                  title: "3-Layer Rewards",
+                  description: "Earn from Layer 1 (Direct), Layer 2, and Layer 3 (Extended Network)",
                 },
                 {
                   icon: Trophy,
-                  title: "Top Referrer Bonuses",
-                  description: "Monthly rewards for top performers across all chains",
+                  title: "Automatic Payouts",
+                  description: "Rewards airdropped every 12 hours directly to your wallet",
                 },
               ].map((benefit, index) => (
                 <motion.div key={index} variants={fadeInUp}>
