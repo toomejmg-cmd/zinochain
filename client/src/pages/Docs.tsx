@@ -34,12 +34,12 @@ export default function Docs() {
 
   useEffect(() => {
     if (mainRef.current) {
-      // Use requestAnimationFrame to ensure DOM is updated
-      requestAnimationFrame(() => {
+      // Add small delay to ensure content renders before scrolling
+      setTimeout(() => {
         if (mainRef.current) {
           mainRef.current.scrollTop = 0;
         }
-      });
+      }, 100);
     }
   }, [activeSection]);
 
