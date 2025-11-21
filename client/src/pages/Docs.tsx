@@ -34,7 +34,12 @@ export default function Docs() {
 
   useEffect(() => {
     if (mainRef.current) {
-      mainRef.current.scrollTo(0, 0);
+      // Use requestAnimationFrame to ensure DOM is updated
+      requestAnimationFrame(() => {
+        if (mainRef.current) {
+          mainRef.current.scrollTop = 0;
+        }
+      });
     }
   }, [activeSection]);
 
