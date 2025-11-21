@@ -638,7 +638,7 @@ export default function Docs() {
       <Navbar />
 
       <SidebarProvider style={style as React.CSSProperties}>
-        <div className="flex flex-1 w-full">
+        <div className="flex flex-1 w-full mt-16">
           <Sidebar>
             <SidebarContent>
               <SidebarGroup>
