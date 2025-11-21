@@ -637,8 +637,53 @@ export default function Docs() {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
 
-      <SidebarProvider style={style as React.CSSProperties}>
-        <div className="flex flex-1 w-full overflow-hidden">
+      {/* Mobile View - Tabs */}
+      <div className="lg:hidden flex-1 flex flex-col pt-16">
+        <div className="border-b overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 px-4 py-3 min-w-max">
+            {sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+                  activeSection === section.id
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                }`}
+                data-testid={`button-section-${section.id}`}
+              >
+                {section.title}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <main className="flex-1 overflow-y-auto">
+          <div className="px-4 sm:px-6 py-6">
+            <motion.div
+              key={activeSection}
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+            >
+              <Card className="bg-card/50 backdrop-blur-sm" data-testid={`content-${activeSection}`}>
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold mb-4" data-testid={`text-section-title-${activeSection}`}>
+                    {content[activeSection].title}
+                  </h2>
+                  {content[activeSection].content}
+                </div>
+              </Card>
+            </motion.div>
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+
+      {/* Desktop View - Sidebar */}
+      <SidebarProvider style={style as React.CSSProperties} className="hidden lg:flex">
+        <div className="flex flex-1 w-full">
           <Sidebar className="pt-16">
             <SidebarContent>
               <SidebarGroup>
@@ -662,13 +707,9 @@ export default function Docs() {
             </SidebarContent>
           </Sidebar>
 
-          <div className="flex-1 flex flex-col w-full overflow-hidden">
-            <header className="hidden lg:flex items-center h-16 px-4 border-b sticky top-0 z-10 bg-background">
-              <h2 className="text-lg font-semibold">Documentation</h2>
-            </header>
-
-            <main className="flex-1 overflow-y-auto overflow-x-hidden">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+          <div className="flex-1 flex flex-col">
+            <main className="flex-1 overflow-y-auto">
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <motion.div
                   initial="hidden"
                   animate="visible"
