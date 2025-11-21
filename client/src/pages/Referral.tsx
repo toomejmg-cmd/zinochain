@@ -186,6 +186,110 @@ export default function Referral() {
             variants={staggerContainer}
             className="mb-20"
           >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-2xl md:text-4xl font-bold text-center mb-12"
+              data-testid="text-system-details-title"
+            >
+              How the <span className="gradient-text">3-Layer System</span> Works
+            </motion.h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              {[
+                {
+                  title: "Layer 1 - Direct Referrals",
+                  description: "Earn up to 55% commission from users you directly refer. They trade, you earn immediately.",
+                  details: "Direct rewards on every trade made by your referrals"
+                },
+                {
+                  title: "Layer 2 - Secondary Network",
+                  description: "Earn lower tier rewards from users your referrals bring in. Build your network passively.",
+                  details: "Extended earning without active promotion"
+                },
+                {
+                  title: "Layer 3 - Extended Reach",
+                  description: "Extend your earnings even further with our 3-tier network system. More layers, more earnings.",
+                  details: "Maximum earning potential across your network"
+                },
+              ].map((layer, index) => (
+                <motion.div key={index} variants={fadeInUp}>
+                  <Card className="p-6 h-full hover-elevate bg-card/50 backdrop-blur-sm border-primary/20" data-testid={`card-layer-${index}`}>
+                    <h3 className="text-lg font-semibold mb-3 text-primary" data-testid={`text-layer-title-${index}`}>
+                      {layer.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-3" data-testid={`text-layer-description-${index}`}>
+                      {layer.description}
+                    </p>
+                    <p className="text-sm text-primary/80 italic" data-testid={`text-layer-details-${index}`}>
+                      {layer.details}
+                    </p>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            <Card className="p-8 bg-card/50 border-primary/20" data-testid="card-requirements">
+              <motion.h3
+                variants={fadeInUp}
+                className="text-xl font-semibold mb-6"
+                data-testid="text-requirements-title"
+              >
+                Getting Started with Referrals
+              </motion.h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div variants={fadeInUp} className="space-y-3" data-testid="card-requirements-left">
+                  <h4 className="font-semibold text-foreground" data-testid="text-requirement-rewards-title">Rewards & Payouts</h4>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>50% cashback on referred users' trading fees</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>25% base cashback on your own trades</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Automatic payouts every 12 hours</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Minimum threshold: 0.005 SOL in rewards wallet</span>
+                    </li>
+                  </ul>
+                </motion.div>
+                <motion.div variants={fadeInUp} className="space-y-3" data-testid="card-requirements-right">
+                  <h4 className="font-semibold text-foreground" data-testid="text-requirement-links-title">Your Referral Link</h4>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Get a unique referral link from your dashboard</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Regenerate custom links anytime</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Share with friends via social media or messaging</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Track real-time earnings and referral stats</span>
+                    </li>
+                  </ul>
+                </motion.div>
+              </div>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="mb-20"
+          >
             <Card className="p-12 text-center bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/30 glow-border" data-testid="card-leaderboard-teaser">
               <motion.div variants={fadeInUp} className="flex justify-center mb-6">
                 <Trophy className="h-16 w-16 text-primary" />

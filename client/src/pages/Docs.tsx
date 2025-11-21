@@ -21,6 +21,9 @@ import {
   Bot,
   Code,
   ChevronRight,
+  Zap,
+  Lock,
+  TrendingUp,
 } from "lucide-react";
 
 const fadeInUp = {
@@ -38,10 +41,12 @@ export default function Docs() {
   const sections = [
     { id: "overview", title: "Overview", icon: BookOpen },
     { id: "multichain", title: "Multi-Chain Support", icon: Wallet },
+    { id: "trading", title: "Token Trading", icon: CreditCard },
+    { id: "portfolio", title: "Portfolio Tracking", icon: TrendingUp },
+    { id: "advanced", title: "Advanced Features", icon: Zap },
     { id: "wallet", title: "Connect Wallet", icon: Wallet },
-    { id: "moonpay", title: "MoonPay Guide", icon: CreditCard },
+    { id: "security", title: "Security", icon: Lock },
     { id: "commands", title: "Bot Commands", icon: Bot },
-    { id: "api", title: "API (Coming Soon)", icon: Code },
   ];
 
   const content: Record<string, { title: string; content: JSX.Element }> = {
@@ -360,38 +365,261 @@ export default function Docs() {
         </div>
       ),
     },
-    api: {
-      title: "API Documentation (Coming Soon)",
+    trading: {
+      title: "Token Trading",
       content: (
         <div className="space-y-6">
-          <Card className="p-12 text-center bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/30" data-testid="card-api-coming-soon">
-            <Code className="h-16 w-16 text-primary mx-auto mb-6" />
-            <h3 className="text-2xl font-bold mb-4" data-testid="text-api-coming-soon-title">API Documentation</h3>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-api-coming-soon-description">
-              We're working on comprehensive API documentation to help developers
-              integrate Zinochain services into their applications. Stay tuned for
-              updates!
-            </p>
+          <p className="text-lg text-muted-foreground" data-testid="text-trading-intro">
+            Zinochain Bot provides a comprehensive token trading experience with advanced features across all supported blockchains.
+          </p>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-xl font-semibold mb-4" data-testid="text-trading-features-heading">Trading Capabilities</h3>
+            <ul className="space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2" data-testid="text-trading-feature-buy">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Buy Tokens:</strong> Swap native coins (SOL/ETH/BNB) for any token instantly</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-trading-feature-sell">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Sell Tokens:</strong> Convert tokens back to native coins with optimal routing</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-trading-feature-custom-input">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Custom Token Input:</strong> Enter token addresses, tickers, or URLs (Pump.fun, Birdeye, DEX Screener)</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-trading-feature-slippage">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Slippage Control:</strong> Adjust tolerance from 0.01% to 50% for volatile pairs</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-trading-feature-fees">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Priority Fees:</strong> Configure transaction priority (Auto, Low, Standard, High)</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-trading-feature-routing">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Best-Price Routing:</strong> Jupiter Aggregator on Solana, OneInch on Ethereum & BSC</span>
+              </li>
+            </ul>
           </Card>
 
-          <Card className="p-6 bg-card/50" data-testid="card-api-planned-features">
-            <h4 className="font-semibold mb-3" data-testid="text-api-planned-features-title">Planned API Features</h4>
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-xl font-semibold mb-4" data-testid="text-trading-fee-heading">Fee System</h3>
+            <p className="text-muted-foreground mb-4" data-testid="text-trading-fee-desc">All fees are transparent and displayed before every trade execution.</p>
             <ul className="space-y-2 text-muted-foreground">
-              <li className="flex items-start gap-2" data-testid="text-api-feature-signals">
+              <li className="flex items-start gap-2">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Real-time trading signals and market data</span>
+                <span>Default 0.5% per transaction (configurable by admins)</span>
               </li>
-              <li className="flex items-start gap-2" data-testid="text-api-feature-referrals">
+              <li className="flex items-start gap-2">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Referral tracking and management</span>
+                <span>Automated fee collection to designated wallet</span>
               </li>
-              <li className="flex items-start gap-2" data-testid="text-api-feature-rewards">
+              <li className="flex items-start gap-2">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Rewards and points balance queries</span>
+                <span>Zero hidden fees - all costs shown upfront</span>
               </li>
-              <li className="flex items-start gap-2" data-testid="text-api-feature-webhooks">
+            </ul>
+          </Card>
+        </div>
+      ),
+    },
+    portfolio: {
+      title: "Portfolio Tracking",
+      content: (
+        <div className="space-y-6">
+          <p className="text-lg text-muted-foreground" data-testid="text-portfolio-intro">
+            Real-time multi-chain portfolio monitoring with complete visibility into your holdings and transaction history.
+          </p>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-xl font-semibold mb-4" data-testid="text-portfolio-features-heading">Portfolio Features</h3>
+            <ul className="space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2" data-testid="text-portfolio-feature-balance">
                 <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Webhook support for custom integrations</span>
+                <span><strong className="text-foreground">Balance Overview:</strong> View SOL, ETH, BNB, and all SPL/ERC-20/BEP-20 token balances</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-portfolio-feature-conversion">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">USD Conversion:</strong> Real-time pricing via CoinGecko API</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-portfolio-feature-history">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Transaction History:</strong> Complete audit trail with timestamps, amounts, and gas fees</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-portfolio-feature-explorer-links">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Block Explorer Links:</strong> Direct links to Solscan, Etherscan, and BSCScan</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-portfolio-feature-management">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Token Management:</strong> Hide tokens below minimum value threshold</span>
+              </li>
+              <li className="flex items-start gap-2" data-testid="text-portfolio-feature-watchlist">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Watchlist:</strong> Add and track specific tokens for monitoring</span>
+              </li>
+            </ul>
+          </Card>
+        </div>
+      ),
+    },
+    advanced: {
+      title: "Advanced Trading Features",
+      content: (
+        <div className="space-y-6">
+          <p className="text-lg text-muted-foreground" data-testid="text-advanced-intro">
+            Sophisticated trading tools for experienced traders looking to optimize their strategies across all supported chains.
+          </p>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-advanced-limit-heading">Limit Orders</h3>
+            <p className="text-muted-foreground mb-3">Set buy/sell orders that execute automatically when your target price is reached.</p>
+            <ul className="space-y-2 text-muted-foreground ml-4">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Define exact buy/sell prices</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>View, edit, and cancel active orders</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Bot monitors 24/7 for target prices</span>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-advanced-dca-heading">DCA (Dollar Cost Averaging)</h3>
+            <p className="text-muted-foreground mb-3">Perfect for long-term investment strategies with automatic periodic purchases.</p>
+            <ul className="space-y-2 text-muted-foreground ml-4">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Daily, weekly, or custom purchase schedules</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Define purchase amount per interval</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Reduce entry price volatility over time</span>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-advanced-snipe-heading">Token Sniping</h3>
+            <p className="text-muted-foreground mb-3">Catch early-stage tokens at launch with millisecond execution.</p>
+            <ul className="space-y-2 text-muted-foreground ml-4">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Monitor tokens at launch</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>MEV protection to minimize sandwich attacks</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Get alerted on price movements instantly</span>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-advanced-alerts-heading">Price Alerts</h3>
+            <p className="text-muted-foreground mb-3">Stay informed 24/7 with custom price targets and instant notifications.</p>
+            <ul className="space-y-2 text-muted-foreground ml-4">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Track unlimited tokens simultaneously</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Alert on price highs or lows</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>Instant Telegram notifications</span>
+              </li>
+            </ul>
+          </Card>
+        </div>
+      ),
+    },
+    security: {
+      title: "Security & Wallet Management",
+      content: (
+        <div className="space-y-6">
+          <p className="text-lg text-muted-foreground" data-testid="text-security-intro">
+            Bank-grade security with AES-256 encryption and non-custodial wallet management. You control your keys, not Zinochain.
+          </p>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-security-encryption-heading">Encryption & Data Protection</h3>
+            <ul className="space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">AES-256-GCM:</strong> Military-grade encryption for private keys</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">At-Rest Encryption:</strong> Keys encrypted in database storage</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">HTTPS Only:</strong> All communications encrypted in transit</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Rate Limiting:</strong> Protection against brute force attacks</span>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-security-wallet-heading">Wallet Security</h3>
+            <ul className="space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Non-Custodial:</strong> You control private keys, not Zinochain</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">One-Time Seed Display:</strong> Private keys shown only once during creation</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Import Wallets:</strong> Import existing wallets using BIP39 seed phrases</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Multiple Wallets:</strong> Manage up to 5 wallets per user</span>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-6 bg-card/50">
+            <h3 className="text-lg font-semibold mb-4 text-primary" data-testid="text-security-transaction-heading">Transaction Security</h3>
+            <ul className="space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">MEV Protection:</strong> Minimize sandwich attacks (configurable)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Slippage Limits:</strong> User-defined price protection</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Manual Approval:</strong> Optional confirmation for all transactions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ChevronRight className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span><strong className="text-foreground">Gas Monitoring:</strong> Alerts on high gas prices</span>
               </li>
             </ul>
           </Card>
