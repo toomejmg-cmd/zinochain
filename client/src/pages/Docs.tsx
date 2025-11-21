@@ -638,7 +638,7 @@ export default function Docs() {
             data-testid="button-menu-toggle"
           >
             <Menu className="h-5 w-5" />
-            <span>Documentation Sections</span>
+            <span>{sections.find((s) => s.id === activeSection)?.title || "Documentation Sections"}</span>
           </button>
 
           {/* Menu Dropdown */}
@@ -674,7 +674,7 @@ export default function Docs() {
       </div>
 
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-4">
           <motion.div
             initial="hidden"
             animate="visible"
