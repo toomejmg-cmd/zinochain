@@ -638,8 +638,8 @@ export default function Docs() {
       <Navbar />
 
       <SidebarProvider style={style as React.CSSProperties}>
-        <div className="flex flex-1 w-full">
-          <Sidebar className="pt-16">
+        <div className="flex flex-1 w-full overflow-hidden">
+          <Sidebar className="pt-16 hidden lg:flex">
             <SidebarContent>
               <SidebarGroup>
                 <SidebarGroupContent>
@@ -662,14 +662,14 @@ export default function Docs() {
             </SidebarContent>
           </Sidebar>
 
-          <div className="flex-1 flex flex-col">
-            <header className="flex items-center h-14 px-4 border-b lg:hidden">
+          <div className="flex-1 flex flex-col w-full overflow-hidden">
+            <header className="flex items-center h-16 px-4 border-b lg:hidden sticky top-0 z-10 bg-background">
               <SidebarTrigger data-testid="button-sidebar-toggle" />
               <h2 className="ml-4 text-lg font-semibold">Documentation</h2>
             </header>
 
-            <main className="flex-1 overflow-y-auto">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <main className="flex-1 overflow-y-auto overflow-x-hidden">
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
                 <motion.div
                   initial="hidden"
                   animate="visible"
