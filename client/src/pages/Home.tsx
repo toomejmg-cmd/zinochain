@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import heroLogo from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
+import heroBg from "@assets/Jla3P43tx11_1763744179408.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -56,6 +57,15 @@ export default function Home() {
         id="hero"
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
       >
+        {/* Faint background image */}
+        <div className="absolute inset-0 opacity-15">
+          <img 
+            src={heroBg} 
+            alt="Hero background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-chart-2/20" />
         <div className="absolute inset-0">
           <GridScan
