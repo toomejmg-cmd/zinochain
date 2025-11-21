@@ -639,7 +639,7 @@ export default function Docs() {
 
       <SidebarProvider style={style as React.CSSProperties}>
         <div className="flex flex-1 w-full overflow-hidden">
-          <Sidebar className="pt-0 hidden lg:flex lg:pt-16 z-[60] lg:z-auto">
+          <Sidebar className="pt-16">
             <SidebarContent>
               <SidebarGroup>
                 <SidebarGroupContent>
@@ -663,9 +663,8 @@ export default function Docs() {
           </Sidebar>
 
           <div className="flex-1 flex flex-col w-full overflow-hidden">
-            <header className="flex items-center h-16 px-4 border-b lg:hidden sticky top-0 z-10 bg-background">
-              <SidebarTrigger data-testid="button-sidebar-toggle" />
-              <h2 className="ml-4 text-lg font-semibold">Documentation</h2>
+            <header className="hidden lg:flex items-center h-16 px-4 border-b sticky top-0 z-10 bg-background">
+              <h2 className="text-lg font-semibold">Documentation</h2>
             </header>
 
             <main className="flex-1 overflow-y-auto overflow-x-hidden">
