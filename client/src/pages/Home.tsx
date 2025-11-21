@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import heroLogo from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
-import heroBg from "@assets/Jla3P43tx11_1763744179408.png";
+import heroBg from "@assets/Jla3P43tx11_1763744666344.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
