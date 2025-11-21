@@ -58,11 +58,11 @@ export default function Home() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
       >
         {/* Faint background image */}
-        <div className="absolute inset-0 opacity-15">
+        <div className="absolute inset-0 opacity-40">
           <img 
             src={heroBg} 
             alt="Hero background" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
 
