@@ -23,6 +23,7 @@ import {
   Shield,
   Sparkles,
   MessageCircle,
+  BookOpen,
 } from "lucide-react";
 import { useState } from "react";
 import heroLogo from "@assets/ChatGPT Image Nov 8, 2025, 08_36_07 AM_1762587458220.png";
@@ -123,7 +124,7 @@ export default function Home() {
 
           <motion.div
             variants={fadeInUp}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap"
           >
             <Button
               size="lg"
@@ -138,6 +139,19 @@ export default function Home() {
               >
                 <Rocket className="mr-2 h-5 w-5" />
                 Start Trading on Telegram
+              </a>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 py-6 bg-background/50 backdrop-blur-sm"
+              asChild
+              data-testid="button-beginners-guide"
+            >
+              <a href="/beginners-guide">
+                <BookOpen className="mr-2 h-5 w-5" />
+                Beginner's Guide
               </a>
             </Button>
 
