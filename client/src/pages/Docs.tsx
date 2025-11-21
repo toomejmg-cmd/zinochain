@@ -713,7 +713,10 @@ export default function Docs() {
             <div className="flex items-center justify-between gap-4 mt-12">
               {prevSection ? (
                 <Button
-                  onClick={() => setActiveSection(prevSection.id)}
+                  onClick={() => {
+                    setActiveSection(prevSection.id);
+                    setShowMenu(false);
+                  }}
                   variant="outline"
                   className="flex items-center gap-2"
                   data-testid="button-nav-prev"
@@ -730,7 +733,10 @@ export default function Docs() {
 
               {nextSection ? (
                 <Button
-                  onClick={() => setActiveSection(nextSection.id)}
+                  onClick={() => {
+                    setActiveSection(nextSection.id);
+                    setShowMenu(false);
+                  }}
                   variant="outline"
                   className="flex items-center gap-2 ml-auto"
                   data-testid="button-nav-next"
